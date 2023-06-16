@@ -3,6 +3,7 @@ import {Actor, BoundingBox, CollisionType, Color, CompositeCollider, EdgeCollide
 import {GameStateController} from "../../GameState/GameStateController.js";
 import {Resources} from "../../resources.js";
 import {Textbox} from "../../Textbox/Textbox.js";
+import {BigTextBox} from "../../Textbox/BigTextBox.js";
 
 export class TestScene extends ExtendedScene
 {
@@ -44,7 +45,7 @@ export class TestScene extends ExtendedScene
        // _context.engine.backgroundColor  = Color.Red;
 
        GameStateController.instance.spawnPlayer(new Vector(0,0));
-        this.testTextbox = new Textbox();
+        this.testTextbox = new BigTextBox();
         _context.engine.currentScene.add(this.testTextbox);
         _context.engine.currentScene.camera.strategy.elasticToActor(GameStateController.instance.player,0.1,0.1);
         _context.engine.currentScene.camera.strategy.limitCameraBounds(new BoundingBox({top:0,bottom:1600,left:0, right:2900}));

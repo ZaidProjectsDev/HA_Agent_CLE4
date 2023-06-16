@@ -1,7 +1,7 @@
-import {Actor, Font, FontUnit, Label, TextAlign, Color, Vector, Input, Timer} from "excalibur";
+import {Textbox} from "./Textbox.js";
+import {Actor, Color, Font, FontUnit, Input, Label, TextAlign, Timer, Vector} from "excalibur";
 
-
-export class Textbox extends Actor
+export class BigTextBox extends Actor
 {
     isDisplaying
     content
@@ -25,20 +25,15 @@ export class Textbox extends Actor
     engine
     canContinue;
 
-    normalTextBoxParent
-    bigTextBoxParent
     constructor() {
-        super({width:1152, height:256, color:Color.DarkGray, anchor: new Vector(0.5,0)});
+        super({width:1152, height:900, color:Color.Violet, anchor: new Vector(0.5,0.5)});
 
     }
-
     onInitialize(_engine) {
-
-        super.onInitialize(_engine);
-
-        this.buildNormalTextBox(_engine);
+        super.onInitialize(_engine)
+            this.buildBigTextBox(_engine);
     }
-    buildNormalTextBox(_engine)
+    buildBigTextBox(_engine)
     {
         this.pos = new Vector(_engine.halfCanvasWidth, _engine.halfCanvasHeight);
         this.engine = _engine;
@@ -55,7 +50,7 @@ export class Textbox extends Actor
         this.speakerLabel.pos = new Vector(0,112);
 
 
-        this.contentLabel  = new Label({width:1152,height:128,font: new Font({
+        this.contentLabel  = new Label({width:1152,height:512,font: new Font({
                 family: "impact",
                 size: 4,
                 unit: FontUnit.Em,
@@ -68,6 +63,9 @@ export class Textbox extends Actor
         this.typeInterval =  new Timer({fcn:() =>this.typeWriterEffect(), interval:90,repeats :true});
         this.engine.add(this.typeInterval);
     }
+
+
+
 
     hideTextBox()
     {
@@ -115,7 +113,7 @@ export class Textbox extends Actor
             this.textBuffer = "";
             this.canContinue = false;
             if(this.typeInterval!=null)
-            this.typeInterval.stop();
+                this.typeInterval.stop();
 
         }
         else
@@ -139,9 +137,8 @@ export class Textbox extends Actor
             }
         if(this.showingTextBox)
         {
-            this.spawnPosition =  new Vector(_engine.currentScene.camera.viewport.center.x, _engine.currentScene.camera.viewport.center.y+200);
+            this.spawnPosition =  new Vector(_engine.currentScene.camera.viewport.center.x, _engine.currentScene.camera.viewport.center.y);
             this.pos = this.spawnPosition;
         }
     }
-
 }
