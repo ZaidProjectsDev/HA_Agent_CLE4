@@ -1,9 +1,11 @@
 //The player character's main script.
 import {Actor, CollisionType, Color, Input, Vector} from "excalibur";
+import {GameStateController} from "../GameState/GameStateController.js";
 
 export class Player extends Actor
 {
     moveSpeed
+    moveMultiplier
     moveVelocity
     engine
     //Todo: Add possible logic for sprite direction and context cases.
@@ -16,33 +18,43 @@ export class Player extends Actor
     onPreUpdate(_engine, _delta) {
         super.onPreUpdate(_engine, _delta);
         this.engine = _engine;
-        this.updateInput();
+        if(GameStateController.instance.playerCanMove()) {
+            this.updateInput();
+        }
         this.updateMovement();
     }
 
     ///Read player input and update the movevelocity.
     updateInput()
     {
+        if(this.engine.input.keyboard.isHeld(Input.Keys.ShiftLeft) || this.engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.Face2))
+        {
+            this.moveMultiplier = 4;
+        }
+        else
+        {
+            this.moveMultiplier =1;
+        }
         if (this.engine.input.keyboard.isHeld(Input.Keys.D) || this.engine.input.gamepads.at(0).getAxes(Input.Axes.LeftStickX) > 0.5)
         {
-            this.moveVelocity = new Vector(1*this.moveSpeed,this.moveVelocity.y);
+            this.moveVelocity = new Vector(1*this.moveSpeed*this.moveMultiplier,this.moveVelocity.y);
         }
         else
         {
             if (this.engine.input.keyboard.isHeld(Input.Keys.A) || this.engine.input.gamepads.at(0).getAxes(Input.Axes.LeftStickX) < -0.5)
             {
-                this.moveVelocity = new Vector(-1*this.moveSpeed,this.moveVelocity.y);
+                this.moveVelocity = new Vector(-1*this.moveSpeed*this.moveMultiplier,this.moveVelocity.y);
             }
         }
-        if (this.engine.input.keyboard.isHeld(Input.Keys.W) || this.engine.input.gamepads.at(0).getAxes(Input.Axes.LeftStickY) > 0.5)
+        if (this.engine.input.keyboard.isHeld(Input.Keys.W) || this.engine.input.gamepads.at(0).getAxes(Input.Axes.LeftStickY) < -0.5)
         {
-            this.moveVelocity = new Vector(this.moveVelocity.x,-1*this.moveSpeed);
+            this.moveVelocity = new Vector(this.moveVelocity.x,-1*this.moveSpeed*this.moveMultiplier);
         }
         else
         {
-            if (this.engine.input.keyboard.isHeld(Input.Keys.S) || this.engine.input.gamepads.at(0).getAxes(Input.Axes.LeftStickY) < -0.5)
+            if (this.engine.input.keyboard.isHeld(Input.Keys.S) || this.engine.input.gamepads.at(0).getAxes(Input.Axes.LeftStickY) > 0.5)
             {
-                this.moveVelocity = new Vector(this.moveVelocity.x,1*this.moveSpeed);
+                this.moveVelocity = new Vector(this.moveVelocity.x,1*this.moveSpeed*this.moveMultiplier);
             }
         }
     }

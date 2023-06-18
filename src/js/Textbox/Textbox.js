@@ -1,4 +1,5 @@
 import {Actor, Font, FontUnit, Label, TextAlign, Color, Vector, Input, Timer} from "excalibur";
+import {GameStateController} from "../GameState/GameStateController.js";
 
 
 export class Textbox extends Actor
@@ -27,9 +28,9 @@ export class Textbox extends Actor
 
     normalTextBoxParent
     bigTextBoxParent
-    constructor() {
+    constructor(engine) {
         super({width:1152, height:256, color:Color.DarkGray, anchor: new Vector(0.5,0)});
-
+            this.engine = engine;
     }
 
     onInitialize(_engine) {
@@ -41,7 +42,7 @@ export class Textbox extends Actor
     buildNormalTextBox(_engine)
     {
         this.pos = new Vector(_engine.halfCanvasWidth, _engine.halfCanvasHeight);
-        this.engine = _engine;
+
 
 
         this.speakerLabel = new Label({width:1152,height:128,font: new Font({
@@ -65,8 +66,8 @@ export class Textbox extends Actor
         this.contentLabel.anchor = new Vector(0.5,0.5);
         this.contentLabel.pos = new Vector(0,168);
 
-        this.typeInterval =  new Timer({fcn:() =>this.typeWriterEffect(), interval:90,repeats :true});
-        this.engine.add(this.typeInterval);
+      //  this.typeInterval =  new Timer({fcn:() =>this.typeWriterEffect(), interval:90,repeats :true});
+       // this.engine.add(this.typeInterval);
     }
 
     hideTextBox()
@@ -75,6 +76,7 @@ export class Textbox extends Actor
     }
     completeText()
     {
+        GameStateController.instance.showingMessage = false;
         this.showingTextBox = false;
     }
     typeWriterEffect()
@@ -93,19 +95,21 @@ export class Textbox extends Actor
     }
     typeOutText(speaker,content)
     {
+        this.buildNormalTextBox(this.engine);
         this.showingTextBox = true;
         this.speakerLabel.text = speaker;
         this.content = content;
         this.engine.clock.schedule(()=>{this.canContinue = true},500);
-
-        this.typeInterval.start();
+        this.contentLabel.text = this.content;
+        GameStateController.instance.showingMessage = true;
+        // this.typeInterval.start();
     }
 
     onPreUpdate(_engine, _delta) {
         super.onPreUpdate(_engine, _delta);
         if(!this.showingTextBox)
         {
-            this.dockedPosition =  new Vector(_engine.halfDrawWidth, _engine.halfDrawHeight*3);
+            this.dockedPosition =  new Vector(_engine.halfDrawWidth, _engine.halfDrawHeight*32);
 
             this.pos = this.dockedPosition;
             this.speakerLabel.text = ""
@@ -114,8 +118,8 @@ export class Textbox extends Actor
             this.textBufferIndex = 0;
             this.textBuffer = "";
             this.canContinue = false;
-            if(this.typeInterval!=null)
-            this.typeInterval.stop();
+        //    if(this.typeInterval!=null)
+        //    this.typeInterval.stop();
 
         }
         else

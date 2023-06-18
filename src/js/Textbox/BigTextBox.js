@@ -1,5 +1,6 @@
 import {Textbox} from "./Textbox.js";
 import {Actor, Color, Font, FontUnit, Input, Label, TextAlign, Timer, Vector} from "excalibur";
+import {GameStateController} from "../GameState/GameStateController.js";
 
 export class BigTextBox extends Actor
 {
@@ -24,10 +25,11 @@ export class BigTextBox extends Actor
     showingTextBox;
     engine
     canContinue;
-
-    constructor() {
+    overflowCount 
+    constructor(engine) {
         super({width:1152, height:900, color:Color.Violet, anchor: new Vector(0.5,0.5)});
-
+            this.overflowCount = 0;
+            this.engine = engine;
     }
     onInitialize(_engine) {
         super.onInitialize(_engine)
@@ -43,24 +45,25 @@ export class BigTextBox extends Actor
                 family: "impact",
                 size: 5,
                 unit: FontUnit.Em,
-                textAlign:TextAlign.Center
+                textAlign:TextAlign.Right
             }), color:Color.Yellow})
         this.addChild(this.speakerLabel);
-        this.speakerLabel.anchor = new Vector(0,0.5);
-        this.speakerLabel.pos = new Vector(0,112);
+        this.speakerLabel.anchor = new Vector(1,0.5);
+        this.speakerLabel.pos = new Vector(0,-300);
 
 
         this.contentLabel  = new Label({width:1152,height:512,font: new Font({
                 family: "impact",
-                size: 4,
+                size: 3,
                 unit: FontUnit.Em,
-                textAlign:TextAlign.Left
-            }), color:Color.White})
+                textAlign:TextAlign.Start,
+            }), color:Color.White,})
+    
         this.addChild(this.contentLabel);
         this.contentLabel.anchor = new Vector(0.5,0.5);
-        this.contentLabel.pos = new Vector(0,168);
+        this.contentLabel.pos = new Vector(0,0);
 
-        this.typeInterval =  new Timer({fcn:() =>this.typeWriterEffect(), interval:90,repeats :true});
+        this.typeInterval =  new Timer({fcn:() =>this.typeWriterEffect(), interval:2, repeats: true});
         this.engine.add(this.typeInterval);
     }
 
@@ -73,37 +76,83 @@ export class BigTextBox extends Actor
     }
     completeText()
     {
+        GameStateController.instance.showingMessage = false;
         this.showingTextBox = false;
     }
     typeWriterEffect()
     {
-        console.log("beep");
-
         if(this.textBufferIndex<this.content.length) {
-            this.textBuffer+=this.content[this.textBufferIndex];
-            this.textBufferIndex++;
+            if(this.overflowCount>=53 ||this.content[this.textBufferIndex] == '.')
+            {
+                this.textBuffer+="\n";
+                this.overflowCount = 0;
+                
+                if(this.content[this.textBufferIndex] == '.')
+                {
+                    this.textBuffer+=this.content[this.textBufferIndex];
+                    this.textBufferIndex++;
+                }
+            }
+            else
+            {
+                this.textBuffer+=this.content[this.textBufferIndex];
+                this.overflowCount++;
+                this.textBufferIndex++;
+            }
+            
         }
         else
         {
             this.typeInterval.stop();
+            this.typeInterval.reset();
         }
         this.contentLabel.text = this.textBuffer;
+
     }
     typeOutText(speaker,content)
     {
+        this.buildBigTextBox(this.engine)
         this.showingTextBox = true;
         this.speakerLabel.text = speaker;
-        this.content = content;
+        let sanitizedContent = "";
+        let overflow = 0;
+        GameStateController.instance.showingMessage = true;
+        for(let i=0; i<content.length; ++i)
+        {
+            if((i+32)<=content.length)
+            if(content[i+32] == '.')
+            {
+                sanitizedContent+=content[i]+"\n" 
+                overflow =0;
+            }
+            if(overflow>=64)
+            {
+                sanitizedContent+="\n" 
+                sanitizedContent+=content[i]; 
+                overflow =0;
+              
+            }
+
+            else
+            {
+            
+                sanitizedContent+=content[i]; 
+                overflow++;
+            }
+            
+        }
+        this.content = sanitizedContent;
+        this.contentLabel.text = this.content;
         this.engine.clock.schedule(()=>{this.canContinue = true},500);
 
-        this.typeInterval.start();
+      //  this.typeInterval.start();
     }
 
     onPreUpdate(_engine, _delta) {
         super.onPreUpdate(_engine, _delta);
         if(!this.showingTextBox)
         {
-            this.dockedPosition =  new Vector(_engine.halfDrawWidth, _engine.halfDrawHeight*3);
+            this.dockedPosition =  new Vector(_engine.halfDrawWidth, _engine.halfDrawHeight*32);
 
             this.pos = this.dockedPosition;
             this.speakerLabel.text = ""

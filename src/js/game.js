@@ -29,7 +29,7 @@ export class Game extends Engine {
     fireEffectAnimation;
     scoreTracker;
     constructor() {
-        super({ width: 1280, height: 720 ,maxFps:30, displayMode: DisplayMode.FitScreen, antialiasing:true, resolution:Resolution.Standard})
+        super({ width: 1280, height: 720 ,maxFps:60, displayMode: DisplayMode.FitScreen, antialiasing:true, resolution:Resolution.Standard})
         this.scoreTracker = new ScoreTracker();
         Physics.acc = new Vector(0,300);
 
