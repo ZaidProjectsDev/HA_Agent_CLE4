@@ -27,7 +27,7 @@ export class BigTextBox extends Actor
     canContinue;
     overflowCount 
     constructor(engine) {
-        super({width:1152, height:900, color:Color.Violet, anchor: new Vector(0.5,0.5)});
+        super({width:1152, height:900, color:Color.fromHex("f18805"), anchor: new Vector(0.5,0.5)});
             this.overflowCount = 0;
             this.engine = engine;
     }

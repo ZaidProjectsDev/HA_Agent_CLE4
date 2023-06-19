@@ -5,8 +5,9 @@ import _128x32Button from '../images/128x32_button.png';
 import _512x256Title from '../images/512x256_title.png';
 import _bazooka from '../images/bazooka_idle.png';
 import _fireEffect from '../images/fire_spritesheet.png';
-import _backgroundTest from '../images/testing/Map_HAPlein_01.png';
+import _backgroundTest from '../images/testing/HighresMap1.jpg';
 import _backgroundTestCollider from '../images/testing/Map_HAPlein_01_collision.png';
+import asset_interior_a from '../images/interior/Interior_A.jpg';
 const Resources = {
     Fish: new ImageSource(fishImage),
     GenericNoise: new ImageSource(genericNoise),
@@ -15,7 +16,8 @@ const Resources = {
     _bazooka: new ImageSource(_bazooka),
     _fireEffect: new ImageSource(_fireEffect),
     backgroundImageTest: new ImageSource(_backgroundTest),
-    backgroundImageCollision: new ImageSource(_backgroundTestCollider)
+    backgroundImageCollision: new ImageSource(_backgroundTestCollider),
+    bkgInteriorA: new ImageSource(asset_interior_a)
 }
 const resourceArray = []
 for (const key in Resources) {

@@ -29,7 +29,7 @@ export class TestScene extends ExtendedScene
 
     showPoliceMessage()
     {
-        GameStateController.instance.showTextBoxMessge("Police", "OH YEAH");
+        GameStateController.instance.showTextBoxMessage("Police", "I saw some blood!");
     }
     showTutorialMessage()
     {
@@ -38,6 +38,10 @@ export class TestScene extends ExtendedScene
                                                                                  "someone set off an unsolicited test of a Time Machine which subsequently broke down and caused the entirety of the location to be torn apart between the Present and Past."+
                                                                                  "You must continue your investigation into the murder, despite being stranded in various environments that change based on your interaction with them. You will jump between Past and Present and"+
                                                                                  " must find a way to use that to your advantage or find your way back." );
+    }
+    showBloodExaminationMessage()
+    {
+        GameStateController.instance.showTextBoxMessage("You", "This blood seems fresh, unfortunate soul.\nI should follow the trail inside\n to look for more clues.\,My investigation is starting\n to get interesting.");
     }
     defineCollisions()
     {
@@ -49,50 +53,72 @@ export class TestScene extends ExtendedScene
         this.engine.add(col3);
         let col4= new Actor({collisionType:CollisionType.Fixed, color:Color.Black, width:4098, height:64, pos: new Vector(1000,15)})
         this.engine.add(col4);
+        let colPillar1 = new Actor({collisionType:CollisionType.Fixed, color:Color.Black, radius: 35, pos: new Vector(1086,388)})
+        this.engine.add(colPillar1) ;
+        let colPillar2 = new Actor({collisionType:CollisionType.Fixed, color:Color.Black, radius: 35, pos: new Vector(1086,88)})
+        this.engine.add(colPillar2) ;
+        let colBooth =  new Actor({collisionType:CollisionType.Fixed, color:Color.Black, width:512, height:192, pos: new Vector(2245,764)})
+        this.engine.add(colBooth);
+    }
+    goToInteriorA()
+    {
+       GameStateController.getEngine().goToScene("Interior_A");
     }
     onInitialize(_engine) {
         super.onInitialize(_engine);
-        this.testTextbox = new BigTextBox();
-        this.add(this.testTextbox);
+        //this.testTextbox = new BigTextBox();
+     //   this.add(this.testTextbox);
         this.defineCollisions();
     }
 
     onActivate(_context) {
         super.onActivate(_context);
-      //
-        //_context.engine.showDebug(true);
         _context.engine.backgroundColor = Color.Black;
-        let backgroundImageSprite = Resources.backgroundImageTest.toSprite();
-        let backgroundImageSpriteCollision = Resources.backgroundImageCollision.toSprite();
-        this.backgroundImage = new Actor({width:backgroundImageSprite.width, height:backgroundImageSprite.height, anchor:new Vector(0,0,)});
-        this.backgroundImage.graphics.use(backgroundImageSprite);
-        this.backgroundImage.scale = new Vector(2,2);
-        this.engine.add(this.backgroundImage);
-    //    this.backgroundImageCollision = new Actor({width:backgroundImageSprite.width, height:backgroundImageSprite.height, collisionType:CollisionType.PreventCollision});
 
-  //      this.backgroundImageCollision.graphics.use(backgroundImageSpriteCollision);
-     //   this.backgroundImageCollision.scale = new Vector(1,1);_context.engine.currentScene.add(this.backgroundImage);
-      //  _context.engine.currentScene.add(this.backgroundImageCollision);
-       // _context.engine.backgroundColor  = Color.Red;
 
-       GameStateController.instance.spawnPlayer(new Vector(722,970));
+        this.setBackground(Resources.backgroundImageTest.toSprite(),new Vector(2,2));
 
-        _context.engine.currentScene.camera.strategy.elasticToActor(GameStateController.instance.player,0.1,0.1);
-        _context.engine.currentScene.camera.strategy.limitCameraBounds(new BoundingBox({top:0,bottom:1600,left:0, right:2900}));
 
-        _context.engine.showDebug(true);
+        GameStateController.instance.spawnPlayer(new Vector(722,970));
+        this.setCameraToPlayer()
+        this.setCameraBariers(0,1600,0,2900);
+      //  _context.engine.currentScene.camera.strategy.elasticToActor(GameStateController.instance.player,0.1,0.1);
+        //_context.engine.currentScene.camera.strategy.limitCameraBounds(new BoundingBox({top:0,bottom:1600,left:0, right:2900}));
+
+        //_context.engine.showDebug(true);
         this.showTutorialMessage();
 
          const policeTrigger1 = new Trigger({
             width: 32,
-            height: 32,
+            height: 300,
             repeat: 1,
             pos: new Vector(1369, 896),
             target: GameStateController.instance.player,
             action: this.showPoliceMessage,
             color: Color.Red
         })
+        const bloodMessageTrigger = new Trigger({
+            width: 96,
+            height: 96,
+            repeat: 1,
+            pos: new Vector(2449, 264),
+            target: GameStateController.instance.player,
+            action: this.showBloodExaminationMessage,
+            color: Color.Red
+        })
+
+        const newRoomTrigger = new Trigger({
+            width: 32,
+            height: 32,
+            repeat: 1,
+            pos: new Vector(2445, 79),
+            target: GameStateController.instance.player,
+            action: this.goToInteriorA,
+            color: Color.Red
+        })
         _context.engine.currentScene.add(policeTrigger1);
+         _context.engine.currentScene.add(newRoomTrigger);
+         GameStateController.getEngine().add(bloodMessageTrigger);
 
     }
 

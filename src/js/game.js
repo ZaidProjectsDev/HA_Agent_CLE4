@@ -14,6 +14,7 @@ import { Resources, ResourceLoader } from './resources.js'
 import {ScoreTracker} from "./ScoreTracker.js";
 import { Physics } from 'excalibur'
 import {TestScene} from "./Scenes/Testing/TestScene.js";
+import {Interior_A} from "./Scenes/Main/Interior/Interior_A.js";
 import {GameStateController} from "./GameState/GameStateController.js";
 
 export class Game extends Engine {
@@ -34,7 +35,8 @@ export class Game extends Engine {
         Physics.acc = new Vector(0,300);
 
         this.addScene("testScene", new TestScene());
-
+        this.addScene("Interior_A", new Interior_A())
+        //this.start(ResourceLoader).then(() => this.goToScene('Interior_A',{engine:this}));
         this.start(ResourceLoader).then(() => this.goToScene('testScene',{engine:this}));
     }
     onInitialize(_engine) {

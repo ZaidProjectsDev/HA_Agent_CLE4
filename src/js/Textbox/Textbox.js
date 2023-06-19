@@ -29,7 +29,7 @@ export class Textbox extends Actor
     normalTextBoxParent
     bigTextBoxParent
     constructor(engine) {
-        super({width:1152, height:256, color:Color.DarkGray, anchor: new Vector(0.5,0)});
+        super({width:1366, height:256, color:Color.fromHex("f18805"), anchor: new Vector(0.5,0)});
             this.engine = engine;
     }
 
@@ -45,26 +45,26 @@ export class Textbox extends Actor
 
 
 
-        this.speakerLabel = new Label({width:1152,height:128,font: new Font({
-                family: "impact",
+        this.speakerLabel = new Label({width:1366,height:128,font: new Font({
+                family: "helvetica",
                 size: 5,
                 unit: FontUnit.Em,
                 textAlign:TextAlign.Center
             }), color:Color.Yellow})
         this.addChild(this.speakerLabel);
         this.speakerLabel.anchor = new Vector(0,0.5);
-        this.speakerLabel.pos = new Vector(0,112);
+        this.speakerLabel.pos = new Vector(0,100);
 
 
-        this.contentLabel  = new Label({width:1152,height:128,font: new Font({
-                family: "impact",
+        this.contentLabel  = new Label({width:1366,height:128,font: new Font({
+                family: "helvetica",
                 size: 4,
                 unit: FontUnit.Em,
                 textAlign:TextAlign.Left
             }), color:Color.White})
         this.addChild(this.contentLabel);
         this.contentLabel.anchor = new Vector(0.5,0.5);
-        this.contentLabel.pos = new Vector(0,168);
+        this.contentLabel.pos = new Vector(0,210);
 
       //  this.typeInterval =  new Timer({fcn:() =>this.typeWriterEffect(), interval:90,repeats :true});
        // this.engine.add(this.typeInterval);
@@ -143,7 +143,15 @@ export class Textbox extends Actor
             }
         if(this.showingTextBox)
         {
-            this.spawnPosition =  new Vector(_engine.currentScene.camera.viewport.center.x, _engine.currentScene.camera.viewport.center.y+200);
+            if(GameStateController.instance.player.pos.y> GameStateController.getEngine().currentScene.camera.y+180)
+            {
+                this.spawnPosition =  new Vector(_engine.currentScene.camera.viewport.center.x, _engine.currentScene.camera.viewport.center.y-450);
+            }
+            else
+            {
+                this.spawnPosition =  new Vector(_engine.currentScene.camera.viewport.center.x, _engine.currentScene.camera.viewport.center.y+200);
+            }
+
             this.pos = this.spawnPosition;
         }
     }

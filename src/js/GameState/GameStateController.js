@@ -13,9 +13,13 @@ const GameState =
         Paused: "Paused",
         Gameplay: "Gameplay"
     }
-    export class GameStateController
-    {
+    export class GameStateController {
         static instance
+
+        static getEngine()
+        {
+            return GameStateController.instance.engine;
+        }
         currentGameState
         //ExcaliburEngine
         engine
@@ -23,7 +27,6 @@ const GameState =
         player
         popUpBox;
         textBox;
-
         showingMessage;
         constructor(engine) {
             if(GameStateController.instance == null)
@@ -58,14 +61,22 @@ const GameState =
         }
         showPopUpMessage(header,content)
         {
+            if(this.popUpBox!= null)
+            {
+                this.popUpBox.kill();
+            }
             this.popUpBox = new BigTextBox(this.engine);
-            this.engine.currentScene.add(this.popUpBox);
+            GameStateController.getEngine().add(this.popUpBox);
             this.popUpBox.typeOutText(header, content);
         }
-        showTextBoxMessge(speaker,content)
+        showTextBoxMessage(speaker, content)
         {
+            if(this.textBox != null)
+            {
+                this.textBox .kill();
+            }
             this.textBox = new Textbox(this.engine);
-            this.engine.currentScene.add(this.textBox);
+            GameStateController.getEngine().add(this.textBox);
             this.textBox.typeOutText(speaker,content);
         }
     }

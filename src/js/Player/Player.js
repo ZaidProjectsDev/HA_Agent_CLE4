@@ -64,7 +64,10 @@ export class Player extends Actor
     {
         this.vel = this.moveVelocity;
         this.moveVelocity = new Vector(this.moveVelocity.x*0.9, this.moveVelocity.y*0.9)
-        console.log(this.pos);
+        if(this.moveVelocity.x>0.8 ||this.moveVelocity.x<-0.8 ||
+            this.moveVelocity.y>0.8 ||this.moveVelocity.y<-0.8 ) {
+            console.log(this.pos);
+        }
     }
 
 }
