@@ -14,6 +14,7 @@ import {GameStateController} from "../../GameState/GameStateController.js";
 import {Resources} from "../../resources.js";
 import {Textbox} from "../../Textbox/Textbox.js";
 import {BigTextBox} from "../../Textbox/BigTextBox.js";
+import {Interactable} from "../../Generics/Interactable.js";
 
 export class TestScene extends ExtendedScene
 {
@@ -85,38 +86,16 @@ export class TestScene extends ExtendedScene
       //  _context.engine.currentScene.camera.strategy.elasticToActor(GameStateController.instance.player,0.1,0.1);
         //_context.engine.currentScene.camera.strategy.limitCameraBounds(new BoundingBox({top:0,bottom:1600,left:0, right:2900}));
 
-        //_context.engine.showDebug(true);
+       // _context.engine.showDebug(true);
         this.showTutorialMessage();
+        const policeTrigger1 = new Interactable(32, 32, this.showPoliceMessage);
+        policeTrigger1.pos = new Vector(1369,896);
+        const bloodMessageTrigger  = new Interactable(32, 32, this.showBloodExaminationMessage);
+        bloodMessageTrigger .pos = new Vector(2449,264);
+        const newRoomTrigger = new Interactable(256, 32, this.goToInteriorA);
+        newRoomTrigger.pos = new Vector(2445,79);
 
-         const policeTrigger1 = new Trigger({
-            width: 32,
-            height: 300,
-            repeat: 1,
-            pos: new Vector(1369, 896),
-            target: GameStateController.instance.player,
-            action: this.showPoliceMessage,
-            color: Color.Red
-        })
-        const bloodMessageTrigger = new Trigger({
-            width: 96,
-            height: 96,
-            repeat: 1,
-            pos: new Vector(2449, 264),
-            target: GameStateController.instance.player,
-            action: this.showBloodExaminationMessage,
-            color: Color.Red
-        })
-
-        const newRoomTrigger = new Trigger({
-            width: 32,
-            height: 32,
-            repeat: 1,
-            pos: new Vector(2445, 79),
-            target: GameStateController.instance.player,
-            action: this.goToInteriorA,
-            color: Color.Red
-        })
-        _context.engine.currentScene.add(policeTrigger1);
+            _context.engine.currentScene.add(policeTrigger1);
          _context.engine.currentScene.add(newRoomTrigger);
          GameStateController.getEngine().add(bloodMessageTrigger);
 

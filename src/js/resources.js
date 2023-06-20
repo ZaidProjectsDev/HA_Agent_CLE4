@@ -10,6 +10,7 @@ import _backgroundTestCollider from '../images/testing/Map_HAPlein_01_collision.
 import asset_interior_a from '../images/interior/Interior_A.jpg';
 import asset_bgm_interior_a from '../sound/bgm/Interior_A.mp3';
 import asset_snd_popup from '../sound/menu/blipSelect.wav'
+import asset_spt_interact from '../images/sprites/Interact.png';
 const Resources = {
     Fish: new ImageSource(fishImage),
     GenericNoise: new ImageSource(genericNoise),
@@ -21,7 +22,8 @@ const Resources = {
     backgroundImageCollision: new ImageSource(_backgroundTestCollider),
     bkgInteriorA: new ImageSource(asset_interior_a),
     bgmInteriorA: new Sound(asset_bgm_interior_a),
-    sndPopUp: new Sound(asset_snd_popup)
+    sndPopUp: new Sound(asset_snd_popup),
+    sptInteract: new ImageSource(asset_spt_interact)
 }
 const resourceArray = []
 for (const key in Resources) {

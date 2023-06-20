@@ -4,7 +4,8 @@
 import {Player} from "../Player/Player.js";
 import {BigTextBox} from "../Textbox/BigTextBox.js";
 import {Textbox} from "../Textbox/Textbox.js";
-import {Sound} from "excalibur";
+import {Actor, Sound, Vector} from "excalibur";
+import {Resources} from "../resources.js";
 
 const GameState =
     {
@@ -40,6 +41,7 @@ const GameState =
         musicVolume
         gameVolume
         currentPlayingBGM
+        interactionIcon
         constructor(engine) {
             if(GameStateController.instance == null)
             {
@@ -83,7 +85,22 @@ const GameState =
             }
             return  true;
         }
-
+        static  getPlayer()
+        {
+            if(GameStateController.instance.player!=null)
+            {
+                return GameStateController.instance.player;
+            }
+            return  null;
+        }
+        static  getPlayerPosition(offset)
+        {
+            if(GameStateController.instance.player!=null)
+            {
+                return new Vector(GameStateController.instance.player.pos.x+offset.x,GameStateController.instance.player.pos.y+offset.y)
+            }
+            return  new Vector(0,0);
+        }
         /**
          *
          * Shows a full screen message. (This disables player movement, btw)
@@ -116,7 +133,32 @@ const GameState =
             GameStateController.getEngine().add(GameStateController.instance.textBox);
             GameStateController.instance.textBox.typeOutText(speaker,content);
         }
-
+        static setInteractionIconState(showing, position)
+        {
+            if(GameStateController.instance.interactionIcon!= null)
+            {
+                if(showing) {
+                    GameStateController.instance.interactionIcon.kill();
+                    GameStateController.instance.interactionIcon = new Actor({width: 256, height: 256})
+                    GameStateController.instance.interactionIcon.graphics.use(Resources.sptInteract.toSprite());
+                    GameStateController.instance.interactionIcon.pos = position;
+                    GameStateController.getEngine().add( GameStateController.instance.interactionIcon);
+                }
+                else
+                {
+                    GameStateController.instance.interactionIcon.kill();
+                }
+            }
+            else
+            {
+                if(showing) {
+                    GameStateController.instance.interactionIcon = new Actor({width: 256, height: 256})
+                    GameStateController.instance.interactionIcon.graphics.use(Resources.sptInteract.toSprite());
+                    GameStateController.instance.interactionIcon.pos = position;
+                    GameStateController.getEngine().add( GameStateController.instance.interactionIcon);
+                }
+            }
+        }
 
         //Sound and Music static Functions
         /**
