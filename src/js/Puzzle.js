@@ -6,18 +6,45 @@ export class Actor extends ex.Actor
     playerInputKb;
     playerInputGp;
 
+    isChecking;
+
     onInitialize(_engine) {
         const expectedSequence = [];
         const playerInputKb = [];
         const playerInputGp = [];
-
+        let isChecking = false;
         this.getPlayerInput();
-
-        this.handleSequence();
 
     }
 
+    //preupdate with confirmation key
+
+    onPreUpdate(_engine, _delta) {
+
+
+
+        if (this.isChecking === false) {
+            _engine.input.keyboard.on('press', (evt) => {
+                if (evt.key === 'Enter') {
+                    this.isChecking = true;
+                    this.handleSequence();
+                }
+            });
+
+            _engine.input.gamepads.on('button', (evt) => {
+                if (evt.button === ex.Input.Buttons.Start) {
+                    this.isChecking = true;
+                    this.handleSequence();
+                }
+            });
+        }
+    }
+
+
     getPlayerInput (_engine) {
+
+        //add check to make sure confirmation key is ignored
+
         _engine.input.keyboard.on('press', (evt) => {
             const keypressed = evt.key;
             this.playerInputKb.push(keypressed);
@@ -29,6 +56,8 @@ export class Actor extends ex.Actor
         });
     }
 
+
+    //refactor length to check for content instead
     handleSequence (_engine) {
         if (this.playerInputKb.length === this.expectedSequence.length || this.playerInputGp.length === this.expectedSequence.length) {
             let isCorrect = true;
@@ -51,5 +80,7 @@ export class Actor extends ex.Actor
             this.playerInputKb.length = 0;
             this.playerInputGp.length = 0;
         }
+
+        this.isChecking = false;
     }
 }
