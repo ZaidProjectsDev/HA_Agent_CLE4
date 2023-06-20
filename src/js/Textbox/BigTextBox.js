@@ -1,6 +1,7 @@
 import {Textbox} from "./Textbox.js";
 import {Actor, Color, Font, FontUnit, Input, Label, TextAlign, Timer, Vector} from "excalibur";
 import {GameStateController} from "../GameState/GameStateController.js";
+import {Resources} from "../resources.js";
 
 export class BigTextBox extends Actor
 {
@@ -111,6 +112,7 @@ export class BigTextBox extends Actor
     }
     typeOutText(speaker,content)
     {
+        GameStateController.playSound(Resources.sndPopUp,0.9);
         this.buildBigTextBox(this.engine)
         this.showingTextBox = true;
         this.speakerLabel.text = speaker;

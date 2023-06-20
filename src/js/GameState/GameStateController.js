@@ -4,6 +4,7 @@
 import {Player} from "../Player/Player.js";
 import {BigTextBox} from "../Textbox/BigTextBox.js";
 import {Textbox} from "../Textbox/Textbox.js";
+import {Sound} from "excalibur";
 
 const GameState =
     {
@@ -12,6 +13,11 @@ const GameState =
         Cutscene: "Cutscene",
         Paused: "Paused",
         Gameplay: "Gameplay"
+    }
+    const SoundProperty={
+        gameVolume:"GameVolume",
+        musicVolume: "MusicVolume",
+        soundVolume: "SoundVolume"
     }
     export class GameStateController {
         static instance
@@ -30,6 +36,10 @@ const GameState =
         popUpBox;
         textBox;
         showingMessage;
+        soundVolume
+        musicVolume
+        gameVolume
+        currentPlayingBGM
         constructor(engine) {
             if(GameStateController.instance == null)
             {
@@ -37,6 +47,9 @@ const GameState =
             }
             GameStateController.instance.engine = engine;
             GameStateController.instance.currentGameState = GameState.MainMenu
+            GameStateController.setVolumeProperty(SoundProperty.gameVolume,1);
+            GameStateController.setVolumeProperty(SoundProperty.soundVolume,0.7);
+            GameStateController.setVolumeProperty(SoundProperty.musicVolume,0.45);
         }
 
         setGameState(newGameState)
@@ -103,4 +116,59 @@ const GameState =
             GameStateController.getEngine().add(GameStateController.instance.textBox);
             GameStateController.instance.textBox.typeOutText(speaker,content);
         }
+
+
+        //Sound and Music static Functions
+        /**
+         *
+         * Sets the volume level for the specified sound property
+         * @param soundProperty
+         * @param volume
+         */
+        static setVolumeProperty(soundProperty,volume)
+        {
+            switch (soundProperty)
+            {
+                case SoundProperty.soundVolume: GameStateController.instance.soundVolume = volume;
+                    break;
+                case SoundProperty.musicVolume: GameStateController.instance.musicVolume = volume;
+                    break;
+                case SoundProperty.gameVolume: GameStateController.instance.gameVolume = volume;
+                    break;
+            }
+        }
+        /**
+         *
+         * Plays Sound at a specified volume.
+         * @param sound
+         * @param volume
+         */
+       static playSound(sound, volume)
+        {
+            sound.play(volume*GameStateController.instance.soundVolume*GameStateController.instance.gameVolume)
+        }
+        /**
+         *
+         * Plays Music at a specified volume and loops it if required.
+         * @param bgm
+         * @param volume
+         * @param loop
+         */
+       static playBGM(bgm, volume, loop)
+        {
+            if(bgm == GameStateController.instance.currentPlayingBGM)
+            {
+                if(GameStateController.instance.currentPlayingBGM.isPlaying())
+                {
+                    return;
+                }
+            }
+            else
+            {
+                GameStateController.instance.currentPlayingBGM = bgm;
+                GameStateController.instance.currentPlayingBGM.play(volume * GameStateController.instance.musicVolume * GameStateController.instance.gameVolume)
+                GameStateController.instance.currentPlayingBGM.loop = loop;
+            }
+        }
+
     }

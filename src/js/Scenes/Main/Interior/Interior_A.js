@@ -43,6 +43,7 @@ export class Interior_A extends ExtendedScene
         GameStateController.getEngine().add(policeTrigger2);
         GameStateController.getEngine().add(policeTrigger3);
         GameStateController.getEngine().add(exteriorDoor);
+        GameStateController.playBGM(Resources.bgmInteriorA,0.5,true);
     }
     setCollisions() {
        // GameStateController.getEngine().showDebug(true);
