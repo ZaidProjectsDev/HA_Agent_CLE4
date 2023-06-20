@@ -15,7 +15,8 @@ import pianoB from '../sound/piano/B.wav';
 import pianoC from '../sound/piano/C.wav';
 import pianoD from '../sound/piano/D.wav';
 import pianoImg from '../images/Piano.jpg';
-
+import asset_snd_popup from '../sound/menu/blipSelect.wav'
+import asset_spt_interact from '../images/sprites/Interact.png';
 const Resources = {
     Fish: new ImageSource(fishImage),
     GenericNoise: new ImageSource(genericNoise),
@@ -32,7 +33,9 @@ const Resources = {
     pianoB: new Sound(pianoB),
     pianoC: new Sound(pianoC),
     pianoD: new Sound(pianoD),
-    pianoImg: new ImageSource(pianoImg)
+    pianoImg: new ImageSource(pianoImg),
+    sptInteract: new ImageSource(asset_spt_interact)
+
 }
 const resourceArray = []
 for (const key in Resources) {
