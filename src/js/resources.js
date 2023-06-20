@@ -14,6 +14,7 @@ import pianoA from '../sound/piano/A.wav';
 import pianoB from '../sound/piano/B.wav';
 import pianoC from '../sound/piano/C.wav';
 import pianoD from '../sound/piano/D.wav';
+import pianoImg from '../images/Piano.jpg';
 
 const Resources = {
     Fish: new ImageSource(fishImage),
@@ -30,7 +31,8 @@ const Resources = {
     pianoA: new Sound(pianoA),
     pianoB: new Sound(pianoB),
     pianoC: new Sound(pianoC),
-    pianoD: new Sound(pianoD)
+    pianoD: new Sound(pianoD),
+    pianoImg: new ImageSource(pianoImg)
 }
 const resourceArray = []
 for (const key in Resources) {

@@ -17,20 +17,27 @@ export class Puzzle extends ex.Actor
         this.isChecking = false;
         this.getPlayerInput(_engine);
 
-        if (this.isChecking === false) {
-            _engine.input.keyboard.on('press', (evt) => {
-                if (evt.key === 'Enter') {
-                    this.isChecking = true;
-                    this.handleSequence();
-                }
-            });
+        // if (this.isChecking === false) {
+        //     _engine.input.keyboard.on('press', (evt) => {
+        //         if (evt.key === 'Enter') {
+        //             this.isChecking = true;
+        //             this.handleSequence();
+        //         }
+        //     });
+        //
+        //     _engine.input.gamepads.on('button', (evt) => {
+        //         if (evt.button === ex.Input.Buttons.Start) {
+        //             this.isChecking = true;
+        //             this.handleSequence();
+        //         }
+        //     });
+        // }
+    }
 
-            _engine.input.gamepads.on('button', (evt) => {
-                if (evt.button === ex.Input.Buttons.Start) {
-                    this.isChecking = true;
-                    this.handleSequence();
-                }
-            });
+    onPreUpdate(_engine, _delta) {
+        if (this.playerInputKb.length > 3 || this.playerInputGp > 3)
+        {
+            this.handleSequence();
         }
     }
 
@@ -40,11 +47,16 @@ export class Puzzle extends ex.Actor
 
         _engine.input.keyboard.on('press', (evt) => {
             const keyPressed = evt.key;
-            this.playerInputKb.push(keyPressed);
+
+            if(keyPressed !== 'Enter') {
+                if (keyPressed === 'KeyA' || keyPressed === 'KeyB' || keyPressed === 'KeyC' || keyPressed === 'KeyD')
+                {
+                    this.playerInputKb.push(keyPressed);
+                }
+            }
+
             console.log(keyPressed);
             console.log(this.playerInputKb);
-
-            if(keyPressed !== 'KeyEnter'){
                 if (keyPressed === 'KeyA') {
                     GameStateController.playSound(Resources.pianoA, 1)
                 }
@@ -60,7 +72,6 @@ export class Puzzle extends ex.Actor
                 if (keyPressed === 'KeyD') {
                     GameStateController.playSound(Resources.pianoD, 1)
                 }
-            }
 
         });
 
