@@ -15,7 +15,9 @@ const GameState =
     }
     export class GameStateController {
         static instance
-
+        /**
+         *Returns the Engine Instance (Pretty Usefull)
+         */
         static getEngine()
         {
             return GameStateController.instance.engine;
@@ -33,50 +35,72 @@ const GameState =
             {
                 GameStateController.instance = this;
             }
-            this.engine = engine;
-            this.currentGameState = GameState.MainMenu
+            GameStateController.instance.engine = engine;
+            GameStateController.instance.currentGameState = GameState.MainMenu
         }
 
         setGameState(newGameState)
         {
             this.currentGameState = newGameState;
         }
-        spawnPlayer(spawnLocation)
+        /**
+         *
+         * Spawns player character in the map
+         * @param speaker
+         * @param content
+         */
+       static spawnPlayer(spawnLocation)
         {
-            if(this.player!= null)
+            if(GameStateController.instance.player!= null)
             {
-                this.player.kill();
+                GameStateController.instance.player.kill();
             }
-            this.player = new Player(200);
-            this.player.pos = spawnLocation;
-            this.engine.currentScene.add(this.player);
+            GameStateController.instance.player = new Player(200);
+            GameStateController.instance.player.pos = spawnLocation;
+            GameStateController.instance.engine.currentScene.add(  GameStateController.instance.player);
         }
-        playerCanMove()
+        /**
+         *Checks if the player can move.
+         */
+      static  playerCanMove()
         {
-            if(this.showingMessage)
+            if(GameStateController.instance.showingMessage)
             {
                 return false;
             }
             return  true;
         }
-        showPopUpMessage(header,content)
+
+        /**
+         *
+         * Shows a full screen message. (This disables player movement, btw)
+         * @param header
+         * @param content
+         */
+     static showPopUpMessage(header,content)
         {
-            if(this.popUpBox!= null)
+            if(   GameStateController.instance.popUpBox!= null)
             {
-                this.popUpBox.kill();
+                GameStateController.instance.popUpBox.kill();
             }
-            this.popUpBox = new BigTextBox(this.engine);
-            GameStateController.getEngine().add(this.popUpBox);
-            this.popUpBox.typeOutText(header, content);
+            GameStateController.instance.popUpBox = new BigTextBox(   GameStateController.instance.engine);
+            GameStateController.getEngine().add(   GameStateController.instance.popUpBox);
+            GameStateController.instance.popUpBox.typeOutText(header, content);
         }
-        showTextBoxMessage(speaker, content)
+        /**
+         *
+         * Shows a text message. (This disables player movement, btw)
+         * @param speaker
+         * @param content
+         */
+      static showTextBoxMessage(speaker, content)
         {
-            if(this.textBox != null)
+            if(    GameStateController.instance.textBox != null)
             {
-                this.textBox .kill();
+                GameStateController.instance.textBox.kill();
             }
-            this.textBox = new Textbox(this.engine);
-            GameStateController.getEngine().add(this.textBox);
-            this.textBox.typeOutText(speaker,content);
+            GameStateController.instance.textBox = new Textbox(GameStateController.instance.engine);
+            GameStateController.getEngine().add(GameStateController.instance.textBox);
+            GameStateController.instance.textBox.typeOutText(speaker,content);
         }
     }

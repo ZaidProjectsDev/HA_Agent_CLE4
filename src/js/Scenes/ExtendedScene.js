@@ -12,7 +12,7 @@ export class ExtendedScene extends  Scene
 
     spawnPlayer(pos)
     {
-        GameStateController.instance.spawnPlayer(pos);
+        GameStateController.spawnPlayer(pos);
     }
     setCameraToPlayer()
     {
