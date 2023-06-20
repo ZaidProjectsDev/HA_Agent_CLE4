@@ -1,6 +1,9 @@
 import * as ex from 'excalibur';
+import {Input} from 'excalibur';
+import {GameStateController} from "./GameState/GameStateController.js";
+import {Resources} from "./resources.js";
 
-export class Actor extends ex.Actor
+export class Puzzle extends ex.Actor
 {
     expectedSequence;
     playerInputKb;
@@ -8,15 +11,11 @@ export class Actor extends ex.Actor
     isChecking;
 
     onInitialize(_engine) {
-        this.expectedSequence = ['A', 'B', 'C', 'D'];
+        this.expectedSequence = ['KeyA', 'KeyB', 'KeyC', 'KeyD'];
         this.playerInputKb = [];
         this.playerInputGp = [];
         this.isChecking = false;
-        this.getPlayerInput();
-
-    }
-
-    onPreUpdate(_engine, _delta) {
+        this.getPlayerInput(_engine);
 
         if (this.isChecking === false) {
             _engine.input.keyboard.on('press', (evt) => {
@@ -35,7 +34,6 @@ export class Actor extends ex.Actor
         }
     }
 
-
     getPlayerInput (_engine) {
 
         //add check to make sure confirmation key is ignored
@@ -43,26 +41,27 @@ export class Actor extends ex.Actor
         _engine.input.keyboard.on('press', (evt) => {
             const keyPressed = evt.key;
             this.playerInputKb.push(keyPressed);
+            console.log(keyPressed);
+            console.log(this.playerInputKb);
 
+            if(keyPressed !== 'KeyEnter'){
+                if (keyPressed === 'KeyA') {
+                    GameStateController.playSound(Resources.pianoA, 1)
+                }
 
-            if (keyPressed === 'A') {
+                if (keyPressed === 'KeyB') {
+                    GameStateController.playSound(Resources.pianoB, 1)
+                }
 
+                if (keyPressed === 'KeyC') {
+                    GameStateController.playSound(Resources.pianoC, 1)
+                }
+
+                if (keyPressed === 'KeyD') {
+                    GameStateController.playSound(Resources.pianoD, 1)
+                }
             }
 
-            if (keyPressed === 'B') {
-
-            }
-
-            if (keyPressed === 'C') {
-
-            }
-
-            if (keyPressed === 'D') {
-
-            }
-
-            //if key pressed matches sound requirement
-            //Tell singleton to play sound
         });
 
         _engine.input.gamepads.on('button', (evt) => {
@@ -77,15 +76,16 @@ export class Actor extends ex.Actor
 
     //refactor length to check for content instead
     handleSequence() {
+        console.log(this.expectedSequence);
         if (
             (this.playerInputKb.length === this.expectedSequence.length &&
                 this.playerInputKb.join('') === this.expectedSequence.join('')) ||
             (this.playerInputGp.length === this.expectedSequence.length &&
                 this.playerInputGp.join('') === this.expectedSequence.join(''))
         ) {
-            // Player entered the correct sequence
+            console.log("Correct");
         } else {
-            // Player entered the wrong sequence
+            console.log("Incorrect");
         }
 
         // Clear player's input for the next round

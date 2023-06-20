@@ -16,6 +16,7 @@ import { Physics } from 'excalibur'
 import {TestScene} from "./Scenes/Testing/TestScene.js";
 import {Interior_A} from "./Scenes/Main/Interior/Interior_A.js";
 import {GameStateController} from "./GameState/GameStateController.js";
+import {PianoTestScene} from "./Scenes/Testing/PianoTestScene.js";
 
 export class Game extends Engine {
 
@@ -36,8 +37,9 @@ export class Game extends Engine {
 
         this.addScene("testScene", new TestScene());
         this.addScene("Interior_A", new Interior_A())
+        this.addScene("PianoTestScene", new PianoTestScene())
         //this.start(ResourceLoader).then(() => this.goToScene('Interior_A',{engine:this}));
-        this.start(ResourceLoader).then(() => this.goToScene('testScene',{engine:this}));
+        this.start(ResourceLoader).then(() => this.goToScene('PianoTestScene',{engine:this}));
     }
     onInitialize(_engine) {
         super.onInitialize(_engine);
