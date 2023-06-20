@@ -9,6 +9,12 @@ import _backgroundTest from '../images/testing/HighresMap1.jpg';
 import _backgroundTestCollider from '../images/testing/Map_HAPlein_01_collision.png';
 import asset_interior_a from '../images/interior/Interior_A.jpg';
 import asset_bgm_interior_a from '../sound/bgm/Interior_A.mp3';
+import asset_snd_popup from '../sound/menu/blipSelect.wav';
+import pianoA from '../sound/piano/A.wav';
+import pianoB from '../sound/piano/B.wav';
+import pianoC from '../sound/piano/C.wav';
+import pianoD from '../sound/piano/D.wav';
+import pianoImg from '../images/Piano.jpg';
 import asset_snd_popup from '../sound/menu/blipSelect.wav'
 import asset_spt_interact from '../images/sprites/Interact.png';
 const Resources = {
@@ -23,7 +29,13 @@ const Resources = {
     bkgInteriorA: new ImageSource(asset_interior_a),
     bgmInteriorA: new Sound(asset_bgm_interior_a),
     sndPopUp: new Sound(asset_snd_popup),
+    pianoA: new Sound(pianoA),
+    pianoB: new Sound(pianoB),
+    pianoC: new Sound(pianoC),
+    pianoD: new Sound(pianoD),
+    pianoImg: new ImageSource(pianoImg),
     sptInteract: new ImageSource(asset_spt_interact)
+
 }
 const resourceArray = []
 for (const key in Resources) {
