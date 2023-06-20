@@ -29,11 +29,11 @@ export class TestScene extends ExtendedScene
 
     showPoliceMessage()
     {
-        GameStateController.instance.showTextBoxMessage("Police", "I saw some blood!");
+        GameStateController.showTextBoxMessage("Police", "I saw some blood!");
     }
     showTutorialMessage()
     {
-        GameStateController.instance.showPopUpMessage("Welcome", "You are a detective from the Holland Rotterdam Agency who is investigating the murder of William Pirrie, chairman of Harland and Wolff."+
+        GameStateController.showPopUpMessage("Welcome", "You are a detective from the Holland Rotterdam Agency who is investigating the murder of William Pirrie, chairman of Harland and Wolff."+
                                                                                  "A famous businessman and partner of the Holland Amerika Line. He was visiting the Holland Amerika Line Office. As you were doing your investigation ,"+
                                                                                  "someone set off an unsolicited test of a Time Machine which subsequently broke down and caused the entirety of the location to be torn apart between the Present and Past."+
                                                                                  "You must continue your investigation into the murder, despite being stranded in various environments that change based on your interaction with them. You will jump between Past and Present and"+
@@ -41,7 +41,7 @@ export class TestScene extends ExtendedScene
     }
     showBloodExaminationMessage()
     {
-        GameStateController.instance.showTextBoxMessage("You", "This blood seems fresh, unfortunate soul.\nI should follow the trail inside\n to look for more clues.\,My investigation is starting\n to get interesting.");
+        GameStateController.showTextBoxMessage("You", "This blood seems fresh, unfortunate soul.\nI should follow the trail inside\n to look for more clues.\,My investigation is starting\n to get interesting.");
     }
     defineCollisions()
     {
@@ -79,7 +79,7 @@ export class TestScene extends ExtendedScene
         this.setBackground(Resources.backgroundImageTest.toSprite(),new Vector(2,2));
 
 
-        GameStateController.instance.spawnPlayer(new Vector(722,970));
+        GameStateController.spawnPlayer(new Vector(722,970));
         this.setCameraToPlayer()
         this.setCameraBariers(0,1600,0,2900);
       //  _context.engine.currentScene.camera.strategy.elasticToActor(GameStateController.instance.player,0.1,0.1);

@@ -18,7 +18,7 @@ export class Player extends Actor
     onPreUpdate(_engine, _delta) {
         super.onPreUpdate(_engine, _delta);
         this.engine = _engine;
-        if(GameStateController.instance.playerCanMove()) {
+        if(GameStateController.playerCanMove()) {
             this.updateInput();
         }
         this.updateMovement();

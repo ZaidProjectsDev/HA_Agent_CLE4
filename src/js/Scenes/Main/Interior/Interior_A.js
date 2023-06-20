@@ -58,10 +58,10 @@ export class Interior_A extends ExtendedScene
 
     policeMessageInteriorA()
     {
-        GameStateController.instance.showTextBoxMessage("You", "I'm inside the Office.");
+        GameStateController.showTextBoxMessage("You", "I'm inside the Office.");
     }
     deadBodyExamine()
     {
-        GameStateController.instance.showTextBoxMessage("You", "So this was William Pierrie.\n A famous man.. What a shame.\n I know this is my job, but it's always upsetting\n to see a good man passing.");
+        GameStateController.showTextBoxMessage("You", "So this was William Pierrie.\n A famous man.. What a shame.\n I know this is my job, but it's always upsetting\n to see a good man passing.");
     }
 }
