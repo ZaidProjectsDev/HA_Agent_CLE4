@@ -5,23 +5,18 @@ export class Actor extends ex.Actor
     expectedSequence;
     playerInputKb;
     playerInputGp;
-
     isChecking;
 
     onInitialize(_engine) {
-        const expectedSequence = [];
-        const playerInputKb = [];
-        const playerInputGp = [];
-        let isChecking = false;
+        this.expectedSequence = ['A', 'B', 'C', 'D'];
+        this.playerInputKb = [];
+        this.playerInputGp = [];
+        this.isChecking = false;
         this.getPlayerInput();
 
     }
 
-    //preupdate with confirmation key
-
     onPreUpdate(_engine, _delta) {
-
-
 
         if (this.isChecking === false) {
             _engine.input.keyboard.on('press', (evt) => {
@@ -46,40 +41,56 @@ export class Actor extends ex.Actor
         //add check to make sure confirmation key is ignored
 
         _engine.input.keyboard.on('press', (evt) => {
-            const keypressed = evt.key;
-            this.playerInputKb.push(keypressed);
+            const keyPressed = evt.key;
+            this.playerInputKb.push(keyPressed);
+
+
+            if (keyPressed === 'A') {
+
+            }
+
+            if (keyPressed === 'B') {
+
+            }
+
+            if (keyPressed === 'C') {
+
+            }
+
+            if (keyPressed === 'D') {
+
+            }
+
+            //if key pressed matches sound requirement
+            //Tell singleton to play sound
         });
 
         _engine.input.gamepads.on('button', (evt) => {
             const buttonPressed = evt.button;
             this.playerInputGp.push(buttonPressed);
+
+            //if key pressed matches sound requirement
+            //Tell singleton to play sound
         });
     }
 
 
     //refactor length to check for content instead
-    handleSequence (_engine) {
-        if (this.playerInputKb.length === this.expectedSequence.length || this.playerInputGp.length === this.expectedSequence.length) {
-            let isCorrect = true;
-            for (let i = 0; i < this.expectedSequence.length; i++) {
-                if (this.playerInputKb[i] !== this.expectedSequence[i] || this.playerInputGp[i] !== this.expectedSequence[i]) {
-                    isCorrect = false;
-                    break;
-                }
-            }
-
-            if (isCorrect) {
-                // Player entered the correct sequence
-                // Do something
-            } else {
-                // Player entered the wrong sequence
-                // Do something else
-            }
-
-            // Clear player's input for the next round
-            this.playerInputKb.length = 0;
-            this.playerInputGp.length = 0;
+    handleSequence() {
+        if (
+            (this.playerInputKb.length === this.expectedSequence.length &&
+                this.playerInputKb.join('') === this.expectedSequence.join('')) ||
+            (this.playerInputGp.length === this.expectedSequence.length &&
+                this.playerInputGp.join('') === this.expectedSequence.join(''))
+        ) {
+            // Player entered the correct sequence
+        } else {
+            // Player entered the wrong sequence
         }
+
+        // Clear player's input for the next round
+        this.playerInputKb.length = 0;
+        this.playerInputGp.length = 0;
 
         this.isChecking = false;
     }
