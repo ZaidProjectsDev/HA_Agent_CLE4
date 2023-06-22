@@ -15,6 +15,7 @@ import {Resources} from "../../resources.js";
 import {Textbox} from "../../Textbox/Textbox.js";
 import {BigTextBox} from "../../Textbox/BigTextBox.js";
 import {Interactable} from "../../Generics/Interactable.js";
+import {SoundProperty} from "../../GameState/SoundProperty.js";
 
 export class TestScene extends ExtendedScene
 {

@@ -6,6 +6,7 @@ import {BigTextBox} from "../Textbox/BigTextBox.js";
 import {Textbox} from "../Textbox/Textbox.js";
 import {Actor, Sound, Vector} from "excalibur";
 import {Resources} from "../resources.js";
+import {SoundProperty} from "./SoundProperty.js";
 
 const GameState =
     {
@@ -15,11 +16,7 @@ const GameState =
         Paused: "Paused",
         Gameplay: "Gameplay"
     }
-const SoundProperty={
-    gameVolume:"GameVolume",
-    musicVolume: "MusicVolume",
-    soundVolume: "SoundVolume"
-}
+
     export class GameStateController {
         static instance
         /**
@@ -45,6 +42,7 @@ const SoundProperty={
         pianoCompleted
         pianoWasIncorrect
         xmlParser
+        lastSpawnPosition
         constructor(engine) {
             if(GameStateController.instance == null)
             {
@@ -52,7 +50,7 @@ const SoundProperty={
             }
             GameStateController.instance.engine = engine;
             GameStateController.instance.currentGameState = GameState.MainMenu
-            GameStateController.setVolumeProperty(SoundProperty.gameVolume,1);
+            GameStateController.setVolumeProperty(SoundProperty.gameVolume,0.5);
             GameStateController.setVolumeProperty(SoundProperty.soundVolume,0.7);
             GameStateController.setVolumeProperty(SoundProperty.musicVolume,0.45);
             GameStateController.instance.pianoWasIncorrect = false
@@ -100,7 +98,7 @@ const SoundProperty={
         ///
         static checkForRequiredStuff()
         {
-            return;
+
             if(GameStateController.instance.pianoCompleted)
             {
                 GameStateController.showTextBoxMessage("You", "Whoa! Something interesting happened.");
@@ -226,11 +224,14 @@ const SoundProperty={
         {
             switch (soundProperty)
             {
-                case SoundProperty.soundVolume: GameStateController.instance.soundVolume = volume;
+                case SoundProperty.soundVolume:
+                    GameStateController.instance.soundVolume = volume;
                     break;
-                case SoundProperty.musicVolume: GameStateController.instance.musicVolume = volume;
+                case SoundProperty.musicVolume:
+                    GameStateController.instance.musicVolume = volume;
                     break;
-                case SoundProperty.gameVolume: GameStateController.instance.gameVolume = volume;
+                case SoundProperty.gameVolume:
+                    GameStateController.instance.gameVolume = volume;
                     break;
             }
         }
@@ -242,6 +243,10 @@ const SoundProperty={
          */
        static playSound(sound, volume)
         {
+            if(GameStateController.instance.gameVolume==0)
+            {
+                return;
+            }
             sound.play(volume*GameStateController.instance.soundVolume*GameStateController.instance.gameVolume)
         }
         /**
@@ -253,6 +258,10 @@ const SoundProperty={
          */
        static playBGM(bgm, volume, loop)
         {
+            if(GameStateController.instance.gameVolume==0)
+            {
+                return;
+            }
             if(bgm == GameStateController.instance.currentPlayingBGM)
             {
                 if(GameStateController.instance.currentPlayingBGM.isPlaying())

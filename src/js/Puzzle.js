@@ -1,6 +1,8 @@
 import * as ex from 'excalibur';
 import {GameStateController} from "./GameState/GameStateController.js";
 import {Resources} from "./resources.js";
+import {Input} from "excalibur";
+import {Button} from "./Generics/Button.js";
 
 export class Puzzle extends ex.Actor
 {
@@ -9,6 +11,7 @@ export class Puzzle extends ex.Actor
     playerInputGp;
     isChecking;
     canContinue;
+    keyPressed;
     onInitialize(_engine) {
         super.onInitialize(_engine);
         this.expectedSequence = ['KeyA', 'KeyB', 'KeyC', 'KeyD'];
@@ -16,7 +19,8 @@ export class Puzzle extends ex.Actor
         this.playerInputGp = [];
         this.isChecking = false;
         this.canContinue = false;
-        this.getPlayerInput(GameStateController.getEngine());
+        this.keyPressed = true;
+      //  this.getPlayerInput(GameStateController.getEngine());
         GameStateController.getEngine().clock.schedule(() => {
             this.canContinue = true;
             console.log('Hello in 300ms')
@@ -41,6 +45,8 @@ export class Puzzle extends ex.Actor
 
     onPreUpdate(_engine, _delta) {
         if(this.canContinue == true) {
+        this.getPlayerInput(_engine);
+
             if (this.playerInputKb.length > 3 || this.playerInputGp > 3) {
                 this.handleSequence();
             }
@@ -50,37 +56,71 @@ export class Puzzle extends ex.Actor
     getPlayerInput (_engine) {
 
             //add check to make sure confirmation key is ignored
+        if(_engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.Face1))
+        {
+            console.log("Check");
+        }
+        if(_engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.Face2)) {
 
-            _engine.input.keyboard.on('press', (evt) => {
-                if(this.canContinue)
-                {
-                const keyPressed = evt.key;
+            console.log("A");
+        }
+        if(_engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.Face3))
+        {
+            console.log("B");
+        }
+        if(_engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.Face4))
+        {
 
-                if (keyPressed !== 'Enter' && keyPressed !== 'Space') {
-                    if (keyPressed === 'KeyA' || keyPressed === 'KeyB' || keyPressed === 'KeyC' || keyPressed === 'KeyD') {
-                        this.playerInputKb.push(keyPressed);
+            console.log("Leave");
+        }
+
+        if(_engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.LeftBumper))
+        {
+            console.log("C _ LeftBumper");
+        }
+        if(_engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.RightBumper))
+        {
+            console.log("D _RightBumper");
+        }
+
+            if(_engine.input.keyboard.getKeys().length>0) {
+                if(this.keyPressed!=_engine.input.keyboard.getKeys()[0] ) {
+                    this.keyPressed = _engine.input.keyboard.getKeys()[0];
+
+
+                    if (this.canContinue) {
+
+                        if ( this.keyPressed!== 'Enter' &&  this.keyPressed !== 'Space') {
+                                this.playerInputKb.push( this.keyPressed);
+
+                        }
+
+                        console.log(this.keyPressed);
+                        console.log(this.playerInputKb);
+                        if ( this.keyPressed === 'KeyA') {
+                            GameStateController.playSound(Resources.pianoA, 1)
+                        }
+
+                        if ( this.keyPressed === 'KeyB') {
+                            GameStateController.playSound(Resources.pianoB, 1)
+                        }
+
+                        if ( this.keyPressed === 'KeyC') {
+                            GameStateController.playSound(Resources.pianoC, 1)
+                        }
+
+                        if ( this.keyPressed === 'KeyD') {
+                            GameStateController.playSound(Resources.pianoD, 1)
+                        }
+
                     }
                 }
-
-                console.log(keyPressed);
-                console.log(this.playerInputKb);
-                if (keyPressed === 'KeyA') {
-                    GameStateController.playSound(Resources.pianoA, 1)
-                }
-
-                if (keyPressed === 'KeyB') {
-                    GameStateController.playSound(Resources.pianoB, 1)
-                }
-
-                if (keyPressed === 'KeyC') {
-                    GameStateController.playSound(Resources.pianoC, 1)
-                }
-
-                if (keyPressed === 'KeyD') {
-                    GameStateController.playSound(Resources.pianoD, 1)
-                }
-
-            }});
+            }
+            else
+            {
+                this.keyPressed = null;
+            }
+            /*
 
             _engine.input.gamepads.on('button', (evt) => {
                 const buttonPressed = evt.button;
@@ -89,6 +129,8 @@ export class Puzzle extends ex.Actor
                 //if key pressed matches sound requirement
                 //Tell singleton to play sound
             });
+            */
+
 
     }
 
@@ -110,7 +152,7 @@ export class Puzzle extends ex.Actor
          //   GameStateController.showTextBoxMessage("You", "Whoa! Something interesting happened.");
         } else {
             console.log("Incorrect");
-            GameStateController.instance.pianoWasIncorrect = false;
+            GameStateController.instance.pianoWasIncorrect = true;
             GameStateController.getEngine().goToScene("Interior_A");
 
            // GameStateController.showTextBoxMessage("You", "Whoa! Something bad happened.");
