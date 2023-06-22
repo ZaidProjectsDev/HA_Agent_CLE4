@@ -15,11 +15,11 @@ const GameState =
         Paused: "Paused",
         Gameplay: "Gameplay"
     }
-    const SoundProperty={
-        gameVolume:"GameVolume",
-        musicVolume: "MusicVolume",
-        soundVolume: "SoundVolume"
-    }
+const SoundProperty={
+    gameVolume:"GameVolume",
+    musicVolume: "MusicVolume",
+    soundVolume: "SoundVolume"
+}
     export class GameStateController {
         static instance
         /**
@@ -42,6 +42,9 @@ const GameState =
         gameVolume
         currentPlayingBGM
         interactionIcon
+        pianoCompleted
+        pianoWasIncorrect
+        xmlParser
         constructor(engine) {
             if(GameStateController.instance == null)
             {
@@ -52,11 +55,63 @@ const GameState =
             GameStateController.setVolumeProperty(SoundProperty.gameVolume,1);
             GameStateController.setVolumeProperty(SoundProperty.soundVolume,0.7);
             GameStateController.setVolumeProperty(SoundProperty.musicVolume,0.45);
+            GameStateController.instance.pianoWasIncorrect = false
+            GameStateController.instance.pianoCompleted = false;
+
         }
 
         setGameState(newGameState)
         {
             this.currentGameState = newGameState;
+        }
+        ///ChagtGPT Experiment
+        static wrapText(text, maxLength) {
+            if (text.length > maxLength) {
+                let wrappedText = '';
+                let remainingText = text;
+
+                while (remainingText.length > maxLength) {
+                    let chunk = remainingText.substring(0, maxLength);
+                    let lastSpaceIndex = chunk.lastIndexOf(' ');
+
+                    // If there is no space within the chunk, find the next space after the chunk
+                    if (lastSpaceIndex === -1) {
+                        lastSpaceIndex = remainingText.indexOf(' ', maxLength);
+                    }
+
+                    // If a space is found, break the chunk at that space
+                    if (lastSpaceIndex !== -1) {
+                        chunk = remainingText.substring(0, lastSpaceIndex);
+                        remainingText = remainingText.substring(lastSpaceIndex + 1);
+                    } else {
+                        // If no space is found, break the chunk at the maxLength
+                        remainingText = remainingText.substring(maxLength);
+                    }
+
+                    wrappedText += chunk + '\n';
+                }
+
+                wrappedText += remainingText;
+                return wrappedText;
+            }
+
+            return text;
+        }
+        ///
+        static checkForRequiredStuff()
+        {
+            return;
+            if(GameStateController.instance.pianoCompleted)
+            {
+                GameStateController.showTextBoxMessage("You", "Whoa! Something interesting happened.");
+            }
+            if(  GameStateController.instance.pianoWasIncorrect)
+            {
+                GameStateController.showTextBoxMessage("You", "Whoa! Something bad happened.");
+                GameStateController.instance.pianoWasIncorrect = false;
+            }
+
+             
         }
         /**
          *
@@ -207,6 +262,11 @@ const GameState =
             }
             else
             {
+                if(GameStateController.instance.currentPlayingBGM!=null)
+                {
+                    GameStateController.instance.currentPlayingBGM.stop();
+                    GameStateController.instance.currentPlayingBGM = null;
+                }
                 GameStateController.instance.currentPlayingBGM = bgm;
                 GameStateController.instance.currentPlayingBGM.play(volume * GameStateController.instance.musicVolume * GameStateController.instance.gameVolume)
                 GameStateController.instance.currentPlayingBGM.loop = loop;

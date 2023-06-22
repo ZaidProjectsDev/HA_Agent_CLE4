@@ -9,7 +9,10 @@ import _backgroundTest from '../images/testing/HighresMap1.jpg';
 import _backgroundTestCollider from '../images/testing/Map_HAPlein_01_collision.png';
 import asset_interior_a from '../images/interior/Interior_A.jpg';
 import asset_bgm_interior_a from '../sound/bgm/Interior_A.mp3';
-import asset_snd_popup from '../sound/menu/blipSelect.wav';
+import asset_bgb_exterior from '../sound/bgm/Exterior.mp3';
+import asset_snd_wrong from '../sound/menu/Wrong.wav';
+import asset_snd_unlock from '../sound/menu/Door_open.mp3';
+import asset_spt_hat from '../images/sprites/DetectiveHat.png';
 import pianoA from '../sound/piano/A.wav';
 import pianoB from '../sound/piano/B.wav';
 import pianoC from '../sound/piano/C.wav';
@@ -28,13 +31,17 @@ const Resources = {
     backgroundImageCollision: new ImageSource(_backgroundTestCollider),
     bkgInteriorA: new ImageSource(asset_interior_a),
     bgmInteriorA: new Sound(asset_bgm_interior_a),
+    bgmExterior: new Sound(asset_bgb_exterior),
     sndPopUp: new Sound(asset_snd_popup),
+    sndUnlock: new Sound(asset_snd_unlock),
+    sndWrong: new Sound(asset_snd_wrong),
     pianoA: new Sound(pianoA),
     pianoB: new Sound(pianoB),
     pianoC: new Sound(pianoC),
     pianoD: new Sound(pianoD),
     pianoImg: new ImageSource(pianoImg),
-    sptInteract: new ImageSource(asset_spt_interact)
+    sptInteract: new ImageSource(asset_spt_interact),
+    sptHat : new ImageSource(asset_spt_hat)
 
 }
 const resourceArray = []

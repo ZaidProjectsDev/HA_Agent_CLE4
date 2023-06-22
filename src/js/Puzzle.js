@@ -1,5 +1,4 @@
 import * as ex from 'excalibur';
-import {Input} from 'excalibur';
 import {GameStateController} from "./GameState/GameStateController.js";
 import {Resources} from "./resources.js";
 
@@ -9,13 +8,19 @@ export class Puzzle extends ex.Actor
     playerInputKb;
     playerInputGp;
     isChecking;
-
+    canContinue;
     onInitialize(_engine) {
+        super.onInitialize(_engine);
         this.expectedSequence = ['KeyA', 'KeyB', 'KeyC', 'KeyD'];
         this.playerInputKb = [];
         this.playerInputGp = [];
         this.isChecking = false;
-        this.getPlayerInput(_engine);
+        this.canContinue = false;
+        this.getPlayerInput(GameStateController.getEngine());
+        GameStateController.getEngine().clock.schedule(() => {
+            this.canContinue = true;
+            console.log('Hello in 300ms')
+        }, 1000);
 
         // if (this.isChecking === false) {
         //     _engine.input.keyboard.on('press', (evt) => {
@@ -35,28 +40,30 @@ export class Puzzle extends ex.Actor
     }
 
     onPreUpdate(_engine, _delta) {
-        if (this.playerInputKb.length > 3 || this.playerInputGp > 3)
-        {
-            this.handleSequence();
+        if(this.canContinue == true) {
+            if (this.playerInputKb.length > 3 || this.playerInputGp > 3) {
+                this.handleSequence();
+            }
         }
     }
 
     getPlayerInput (_engine) {
 
-        //add check to make sure confirmation key is ignored
+            //add check to make sure confirmation key is ignored
 
-        _engine.input.keyboard.on('press', (evt) => {
-            const keyPressed = evt.key;
-
-            if(keyPressed !== 'Enter') {
-                if (keyPressed === 'KeyA' || keyPressed === 'KeyB' || keyPressed === 'KeyC' || keyPressed === 'KeyD')
+            _engine.input.keyboard.on('press', (evt) => {
+                if(this.canContinue)
                 {
-                    this.playerInputKb.push(keyPressed);
-                }
-            }
+                const keyPressed = evt.key;
 
-            console.log(keyPressed);
-            console.log(this.playerInputKb);
+                if (keyPressed !== 'Enter' && keyPressed !== 'Space') {
+                    if (keyPressed === 'KeyA' || keyPressed === 'KeyB' || keyPressed === 'KeyC' || keyPressed === 'KeyD') {
+                        this.playerInputKb.push(keyPressed);
+                    }
+                }
+
+                console.log(keyPressed);
+                console.log(this.playerInputKb);
                 if (keyPressed === 'KeyA') {
                     GameStateController.playSound(Resources.pianoA, 1)
                 }
@@ -73,16 +80,18 @@ export class Puzzle extends ex.Actor
                     GameStateController.playSound(Resources.pianoD, 1)
                 }
 
-        });
+            }});
 
-        _engine.input.gamepads.on('button', (evt) => {
-            const buttonPressed = evt.button;
-            this.playerInputGp.push(buttonPressed);
+            _engine.input.gamepads.on('button', (evt) => {
+                const buttonPressed = evt.button;
+                this.playerInputGp.push(buttonPressed);
 
-            //if key pressed matches sound requirement
-            //Tell singleton to play sound
-        });
+                //if key pressed matches sound requirement
+                //Tell singleton to play sound
+            });
+
     }
+
 
 
     //refactor length to check for content instead
@@ -95,8 +104,16 @@ export class Puzzle extends ex.Actor
                 this.playerInputGp.join('') === this.expectedSequence.join(''))
         ) {
             console.log("Correct");
+            GameStateController.instance.pianoCompleted = true;
+            GameStateController.getEngine().goToScene("Interior_A");
+
+         //   GameStateController.showTextBoxMessage("You", "Whoa! Something interesting happened.");
         } else {
             console.log("Incorrect");
+            GameStateController.instance.pianoWasIncorrect = false;
+            GameStateController.getEngine().goToScene("Interior_A");
+
+           // GameStateController.showTextBoxMessage("You", "Whoa! Something bad happened.");
         }
 
         // Clear player's input for the next round

@@ -2,6 +2,7 @@ import {ExtendedScene} from "../../ExtendedScene.js";
 import {Actor, Vector, Scene, Color, Trigger, CollisionType} from "excalibur";
 import {GameStateController} from "../../../GameState/GameStateController.js";
 import {Resources} from "../../../resources.js";
+import {Interactable} from "../../../Generics/Interactable.js";
 export class Interior_A extends ExtendedScene
 {
     onActivate(_context) {
@@ -12,15 +13,7 @@ export class Interior_A extends ExtendedScene
         this.setCameraToPlayer();
         this.setCameraBariers(150,1445,0,2640)
         this.setCollisions();
-        const policeTrigger2 = new Trigger({
-            width: 32,
-            height: 32,
-            repeat: 1,
-            pos: new Vector(1354, 1240),
-            target: GameStateController.instance.player,
-            action: this.policeMessageInteriorA,
-            color: Color.Red
-        })
+
         const policeTrigger3 = new Trigger({
             width: 90,
             height: 90,
@@ -39,11 +32,15 @@ export class Interior_A extends ExtendedScene
             action: this.goToExterior,
             color: Color.Red
         })
+        const pianoTrigger = new Interactable(96,96, this.goToPianoPuzzle);
+        pianoTrigger.pos = new Vector(1730,1031);
+        GameStateController.getEngine().add(pianoTrigger);
         //GameStateController.instance.showPopUpMessage("Test", "BogosBinted");
-        GameStateController.getEngine().add(policeTrigger2);
+
         GameStateController.getEngine().add(policeTrigger3);
         GameStateController.getEngine().add(exteriorDoor);
         GameStateController.playBGM(Resources.bgmInteriorA,0.5,true);
+        GameStateController.checkForRequiredStuff();
     }
     setCollisions() {
        // GameStateController.getEngine().showDebug(true);
@@ -59,10 +56,14 @@ export class Interior_A extends ExtendedScene
 
     policeMessageInteriorA()
     {
-        GameStateController.showTextBoxMessage("You", "I'm inside the Office.");
+      //  GameStateController.showTextBoxMessage("You", "I'm inside the Office.");
     }
     deadBodyExamine()
     {
         GameStateController.showTextBoxMessage("You", "So this was William Pierrie.\n A famous man.. What a shame.\n I know this is my job, but it's always upsetting\n to see a good man passing.");
+    }
+    goToPianoPuzzle()
+    {
+        GameStateController.getEngine().goToScene("PianoTestScene");
     }
 }

@@ -26,7 +26,8 @@ export class ExtendedScene extends  Scene
     setBackground(backgroundAsset, scale)
     {
 
-        this.backgroundImage = new Actor({width:backgroundAsset.width, height:backgroundAsset.height, anchor:new Vector(0,0,)});
+        this.backgroundImage = new Actor({width:backgroundAsset.width, height:backgroundAsset.height, anchor: new Vector(0,0)});
+       // this.backgroundImage.pos = new Vector(backgroundAsset.width/scale.x, backgroundAsset.height/scale.y);
         this.backgroundImage.graphics.use(backgroundAsset);
         this.backgroundImage.scale = scale;
         this.add(this.backgroundImage);

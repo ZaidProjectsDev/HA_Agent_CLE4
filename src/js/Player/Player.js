@@ -3,6 +3,7 @@ import {Actor, CollisionType, Color, Input, Vector} from "excalibur";
 import {GameStateController} from "../GameState/GameStateController.js";
 import {Weapon} from "../Weapon.js";
 import {Interactable} from "../Generics/Interactable.js";
+import {Resources} from "../resources.js";
 
 export class Player extends Actor
 {
@@ -15,11 +16,11 @@ export class Player extends Actor
     currentInteracation;
     //Todo: Add possible logic for sprite direction and context cases.
     constructor(movesSpeed) {
-        super({width:64, height:64, color: Color.Azure, collisionType:CollisionType.Active});
+        super({ width:32, height:32, radius:496, color: Color.Azure, collisionType:CollisionType.Active});
         this.moveVelocity = new Vector(0,0);
         this.moveSpeed = movesSpeed;
         this.body.useGravity = false;
-        this.interactBubble = new Actor({radius:92});
+        this.interactBubble = new Actor({radius:512});
         this.addChild(this.interactBubble);
         this.interactBubble.on('collisionstart', (evt) => {this.evaluateInteraction(evt)})
         this.interactBubble.on('collisionend', (evt) => {this.endInteraction(evt)})
@@ -37,6 +38,8 @@ export class Player extends Actor
             }
 
         })
+        this.graphics.use(Resources.sptHat.toSprite());
+        this.scale = new Vector(0.1,0.1);
     }
     triggerInteraction()
     {
@@ -47,6 +50,7 @@ export class Player extends Actor
         }
         this.currentInteracation.interact();
         GameStateController.setInteractionIconState(false, new Vector(      this.currentInteracation.pos.x,   this.currentInteracation.pos.y-128));
+        this.currentInteracation = null;
 
     }
     evaluateInteraction(evt)
@@ -124,10 +128,10 @@ export class Player extends Actor
     {
         this.vel = this.moveVelocity;
         this.moveVelocity = new Vector(this.moveVelocity.x*0.9, this.moveVelocity.y*0.9)
-        if(this.moveVelocity.x>0.8 ||this.moveVelocity.x<-0.8 ||
-            this.moveVelocity.y>0.8 ||this.moveVelocity.y<-0.8 ) {
-            console.log(this.pos);
-        }
+     //   if(this.moveVelocity.x>0.8 ||this.moveVelocity.x<-0.8 ||
+           // this.moveVelocity.y>0.8 ||this.moveVelocity.y<-0.8 ) {
+        ///    console.log(this.pos);
+     //   }
     }
 
 }

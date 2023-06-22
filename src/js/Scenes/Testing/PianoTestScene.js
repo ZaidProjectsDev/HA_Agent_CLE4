@@ -5,13 +5,21 @@ import {GameStateController} from "../../GameState/GameStateController.js";
 import {Resources} from "../../resources.js";
 
 export class PianoTestScene extends ExtendedScene {
-    constructor() {``
+    puzzle
+    constructor() {
         super();
     }
+    onDeactivate(_context) {
+        super.onDeactivate(_context);
+        this.puzzle.kill();
+        this.puzzle = null;
+    }
 
-    onInitialize(_engine) {
+    onActivate(_engine) {
        //this.spawnPlayer(new ex.Vector(0,0));
-       GameStateController.getEngine().currentScene.add(new Puzzle());
+        //
+        this.puzzle = new Puzzle();
+        this.add(this.puzzle);
        this.setBackground(Resources.pianoImg.toSprite(), new ex.Vector(1, 1))
     }
 }

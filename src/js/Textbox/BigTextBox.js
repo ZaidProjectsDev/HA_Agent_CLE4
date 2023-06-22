@@ -143,7 +143,7 @@ export class BigTextBox extends Actor
             }
             
         }
-        this.content = sanitizedContent;
+        this.content = GameStateController.wrapText(content,68);
         this.contentLabel.text = this.content;
         this.engine.clock.schedule(()=>{this.canContinue = true},500);
 
