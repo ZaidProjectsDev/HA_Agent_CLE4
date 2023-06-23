@@ -39,7 +39,7 @@ export class Game extends Engine {
         this.addScene("Interior_A", new Interior_A())
         this.addScene("PianoTestScene", new PianoTestScene())
         //this.start(ResourceLoader).then(() => this.goToScene('Interior_A',{engine:this}));
-        this.start(ResourceLoader).then(() => this.goToScene('PianoTestScene',{engine:this}));
+        this.start(ResourceLoader).then(() => this.goToScene('testScene',{engine:this}));
     }
     onInitialize(_engine) {
         super.onInitialize(_engine);

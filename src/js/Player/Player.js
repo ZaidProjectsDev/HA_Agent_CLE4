@@ -27,9 +27,9 @@ export class Player extends Actor
     }
     onInitialize(_engine) {
         super.onInitialize(_engine);
-        _engine.input.gamepads.at(0).on('button', function (ev) {
-           this.triggerInteraction(ev);
-        })
+        _engine.input.gamepads.at(0).on('button', (evt => {
+           this.triggerInteraction();
+        }))
         _engine.input.keyboard.on('press', (evt) => {
             if(GameStateController.playerCanMove()) {
                 if (evt.key == "Space") {
@@ -66,6 +66,26 @@ export class Player extends Actor
             }
             this.currentInteracation=  evt.other;
         }
+        else
+        {
+            let i = null;
+            if(evt.other.children.length>0)
+            {
+                if(evt.other.children[0] instanceof Interactable)
+                {
+                    i = evt.other.children[0];
+                    if(i.pos.y<GameStateController.getEngine().currentScene.camera.pos.y-200)
+                    {
+                        GameStateController.setInteractionIconState(true, new Vector(evt.other.pos.x,evt.other.pos.y));
+                    }
+                    else {
+                        GameStateController.setInteractionIconState(true, new Vector(evt.other.pos.x, evt.other.pos.y - 128));
+                    }
+                    this.currentInteracation=  i;
+                }
+            }
+        }
+
     }
     endInteraction(evt)
     {
@@ -75,6 +95,7 @@ export class Player extends Actor
             evt.other.interactionAlreadyTriggered = false;
             this.currentInteracation = null;
         }
+
     }
     onPreUpdate(_engine, _delta) {
         super.onPreUpdate(_engine, _delta);
@@ -99,24 +120,24 @@ export class Player extends Actor
 
             this.moveMultiplier =1;
         }
-        if (this.engine.input.keyboard.isHeld(Input.Keys.D) || this.engine.input.gamepads.at(0).getAxes(Input.Axes.LeftStickX) > 0.5)
+        if (this.engine.input.keyboard.isHeld(Input.Keys.D) || this.engine.input.gamepads.at(0).getAxes(Input.Axes.LeftStickX) > 0.1)
         {
             this.moveVelocity = new Vector(1*this.moveSpeed*this.moveMultiplier,this.moveVelocity.y);
         }
         else
         {
-            if (this.engine.input.keyboard.isHeld(Input.Keys.A) || this.engine.input.gamepads.at(0).getAxes(Input.Axes.LeftStickX) < -0.5)
+            if (this.engine.input.keyboard.isHeld(Input.Keys.A) || this.engine.input.gamepads.at(0).getAxes(Input.Axes.LeftStickX) < -0.1)
             {
                 this.moveVelocity = new Vector(-1*this.moveSpeed*this.moveMultiplier,this.moveVelocity.y);
             }
         }
-        if (this.engine.input.keyboard.isHeld(Input.Keys.W) || this.engine.input.gamepads.at(0).getAxes(Input.Axes.LeftStickY) < -0.5)
+        if (this.engine.input.keyboard.isHeld(Input.Keys.W) || this.engine.input.gamepads.at(0).getAxes(Input.Axes.LeftStickY) < -0.1)
         {
             this.moveVelocity = new Vector(this.moveVelocity.x,-1*this.moveSpeed*this.moveMultiplier);
         }
         else
         {
-            if (this.engine.input.keyboard.isHeld(Input.Keys.S) || this.engine.input.gamepads.at(0).getAxes(Input.Axes.LeftStickY) > 0.5)
+            if (this.engine.input.keyboard.isHeld(Input.Keys.S) || this.engine.input.gamepads.at(0).getAxes(Input.Axes.LeftStickY) > 0.1)
             {
                 this.moveVelocity = new Vector(this.moveVelocity.x,1*this.moveSpeed*this.moveMultiplier);
             }
@@ -128,10 +149,10 @@ export class Player extends Actor
     {
         this.vel = this.moveVelocity;
         this.moveVelocity = new Vector(this.moveVelocity.x*0.9, this.moveVelocity.y*0.9)
-     //   if(this.moveVelocity.x>0.8 ||this.moveVelocity.x<-0.8 ||
-           // this.moveVelocity.y>0.8 ||this.moveVelocity.y<-0.8 ) {
-        ///    console.log(this.pos);
-     //   }
+     if(this.moveVelocity.x>0.8 ||this.moveVelocity.x<-0.8 ||
+         this.moveVelocity.y>0.8 ||this.moveVelocity.y<-0.8 ) {
+            console.log(this.pos);
+        }
     }
 
 }

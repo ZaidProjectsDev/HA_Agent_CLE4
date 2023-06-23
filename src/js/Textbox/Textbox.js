@@ -1,7 +1,7 @@
 import {Actor, Font, FontUnit, Label, TextAlign, Color, Vector, Input, Timer} from "excalibur";
 import {GameStateController} from "../GameState/GameStateController.js";
 import {Resources} from "../resources.js";
-
+import {Dialogue} from "../GameState/Dialogue.js";
 
 export class Textbox extends Actor
 {
@@ -29,6 +29,9 @@ export class Textbox extends Actor
 
     normalTextBoxParent
     bigTextBoxParent
+    usingDialogue
+    currentDialogue
+    buttonHeld
     constructor(engine) {
         super({width:1366, height:256, color:Color.fromHex("f18805"), anchor: new Vector(0.5,0)});
             this.engine = engine;
@@ -38,10 +41,19 @@ export class Textbox extends Actor
 
         super.onInitialize(_engine);
 
-        this.buildNormalTextBox(_engine);
+    //    this.buildNormalTextBox(_engine);
     }
     buildNormalTextBox(_engine)
     {
+
+        if(this.speakerLabel !=null)
+        {
+            this.speakerLabel.kill();
+        }
+        if(this.contentLabel !=null)
+        {
+            this.contentLabel.kill();
+        }
         this.pos = new Vector(_engine.halfCanvasWidth, _engine.halfCanvasHeight);
 
 
@@ -55,6 +67,7 @@ export class Textbox extends Actor
         this.addChild(this.speakerLabel);
         this.speakerLabel.anchor = new Vector(0,0.5);
         this.speakerLabel.pos = new Vector(0,100);
+
 
 
         this.contentLabel  = new Label({width:1366,height:128,font: new Font({
@@ -77,8 +90,17 @@ export class Textbox extends Actor
     }
     completeText()
     {
+        if(this.speakerLabel !=null)
+        {
+            this.speakerLabel.kill();
+        }
+        if(this.contentLabel !=null)
+        {
+            this.contentLabel.kill();
+        }
         GameStateController.instance.showingMessage = false;
         this.showingTextBox = false;
+
     }
     typeWriterEffect()
     {
@@ -106,6 +128,24 @@ export class Textbox extends Actor
         GameStateController.instance.showingMessage = true;
         // this.typeInterval.start();
     }
+    showDialogue(dialogue)
+    {
+        if(!this.showingTextBox)
+        {
+            this.currentDialogue = dialogue;
+            GameStateController.playSound(Resources.sndPopUp,0.85);
+            this.buildNormalTextBox(this.engine);
+            this.showingTextBox = true;
+            this.speakerLabel.text = dialogue.speaker;
+            this.content = dialogue.getNextLine();
+            this.engine.clock.schedule(()=>{this.canContinue = true},500);
+            this.contentLabel.text = this.content;
+            GameStateController.instance.showingMessage = true;
+        }
+        this.currentDialogue = dialogue;
+
+    }
+
 
     onPreUpdate(_engine, _delta) {
         super.onPreUpdate(_engine, _delta);
@@ -127,7 +167,32 @@ export class Textbox extends Actor
         else
         {
 
+            if (this.canContinue)
 
+                if (_engine.input.keyboard.isHeld(Input.Keys.Space) || _engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.Face1)) {
+                    if (!this.buttonHeld) {
+                        this.buttonHeld = true;
+                        if (this.currentDialogue != null) {
+                            console.log(this.contentLabel);
+                            this.contentLabel.text = this.currentDialogue.getNextLine();
+
+                            if(this.contentLabel.text =="")
+                            {
+                                GameStateController.instance.lastUsedDialog = this.currentDialogue;
+                                this.currentDialogue = null;
+                                this.completeText();
+
+                            }
+
+                        }
+                        else {
+                            this.completeText();
+                        }
+                    }
+
+                } else {
+                    this.buttonHeld = false;
+                }
 
         }
 
@@ -136,13 +201,8 @@ export class Textbox extends Actor
 
     onPostUpdate(_engine, _delta) {
         super.onPostUpdate(_engine, _delta);
-        if(this.canContinue)
-            if (_engine.input.keyboard.isHeld(Input.Keys.Space) || _engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.Face1))
-            {
-                this.completeText();
 
 
-            }
         if(this.showingTextBox)
         {
             if(GameStateController.instance.player.pos.y> GameStateController.getEngine().currentScene.camera.y+180)

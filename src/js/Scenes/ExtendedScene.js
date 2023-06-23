@@ -9,6 +9,9 @@ export class ExtendedScene extends  Scene
     constructor() {
         super();
     }
+    onInitialize(_engine) {
+        super.onInitialize(_engine);
+    }
 
     spawnPlayer(pos)
     {

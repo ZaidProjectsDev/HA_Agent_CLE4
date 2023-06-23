@@ -6,7 +6,7 @@ import {
     Color,
     CompositeCollider,
     EdgeCollider,
-    Input,
+    Input, Random,
     Trigger,
     Vector
 } from "excalibur";
@@ -16,6 +16,8 @@ import {Textbox} from "../../Textbox/Textbox.js";
 import {BigTextBox} from "../../Textbox/BigTextBox.js";
 import {Interactable} from "../../Generics/Interactable.js";
 import {SoundProperty} from "../../GameState/SoundProperty.js";
+import {NPC} from "../../Player/NPC.js";
+import {Dialogue} from "../../GameState/Dialogue.js";
 
 export class TestScene extends ExtendedScene
 {
@@ -23,71 +25,15 @@ export class TestScene extends ExtendedScene
     backgroundImageCollision
     testTextbox
     trigger
+    sam
+    cornelius
+    hendrik
     constructor() {
         super();
 
     }
 
-    static parseXMLToCollider(filePath)
-    {
 
-        const xmlData = filePath/// fs.readFileSync(filePath, 'utf-8');
-
-        // Create a parser object
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(xmlData, 'text/xml');
-
-        // Get all mxGeometry elements
-        const mxGeometryElements = xmlDoc.getElementsByTagName('mxGeometry');
-
-        // Convert mxGeometry elements to Box Colliders
-        for (let i = 0; i < mxGeometryElements.length; i++) {
-            const mxGeometryElement = mxGeometryElements[i];
-            const x = parseInt(mxGeometryElement.getAttribute('x'));
-            const y = parseInt(mxGeometryElement.getAttribute('y'));
-            const width = parseInt(mxGeometryElement.getAttribute('width'));
-            const height = parseInt(mxGeometryElement.getAttribute('height'));
-            const style = mxGeometryElement.parentElement.getAttribute('style');
-
-
-            let shorterSide = Math.min(width, height);
-            let radius = 0.5 * shorterSide;
-            // Create Box Collider using mxGeometry attributes
-            if(style.toString().includes("ellipse"))
-            {
-                const boxCollider = new Actor({
-                    collisionType: CollisionType.Fixed,
-                    radius : radius,
-                    color: Color.Red,
-                    pos : new Vector(x+radius,y+radius),
-                    // Set other properties like position, color, collision type, etc.
-                });
-                GameStateController.getEngine().currentScene.add(boxCollider);
-            }
-            else
-            {
-                const boxCollider = new Actor({
-                    width: width,
-                    height: height,
-                    collisionType: CollisionType.Fixed,
-                    color: Color.Red,
-                    pos : new Vector(x,y),
-                    anchor: new Vector(0,0),
-                    // Set other properties like position, color, collision type, etc.
-                });
-
-                GameStateController.getEngine().currentScene.add(boxCollider);
-            }
-
-
-            // Set Box Collider position based on mxGeometry coordinates
-          //  boxCollider.pos.setTo(x, y);
-
-            // Add the Box Collider to your Excalibur.js scene or appropriate object
-
-        }
-
-    }
     showPoliceMessage()
     {
         GameStateController.showTextBoxMessage("Police", "Oh hello detective, I am glad you are here! I am the night guard, and I heard a suspicious sound last night. When I came to check I saw William Pierrie, the chairman dead on the ground. The body is just inside in the room of the left. Please have a look.");
@@ -108,7 +54,7 @@ export class TestScene extends ExtendedScene
     defineCollisions()
     {
 
-        TestScene.parseXMLToCollider("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+        GameStateController.parseXMLToCollider("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<mxfile host=\"app.diagrams.net\" modified=\"2023-06-21T12:32:46.128Z\" agent=\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.51\" version=\"21.3.6\" etag=\"TpwoRuWfWwxcMMcTJ5kE\" type=\"google\">\n" +
             "  <diagram name=\"Page-1\" id=\"T5fxANU6uVSpAXNNg0ao\">\n" +
             "    <mxGraphModel dx=\"5490\" dy=\"3153\" grid=\"1\" gridSize=\"10\" guides=\"1\" tooltips=\"1\" connect=\"1\" arrows=\"1\" fold=\"1\" page=\"1\" pageScale=\"1\" pageWidth=\"1654\" pageHeight=\"1169\" math=\"0\" shadow=\"0\">\n" +
@@ -178,12 +124,25 @@ export class TestScene extends ExtendedScene
         GameStateController.playSound(Resources.sndUnlock,1);
        GameStateController.getEngine().goToScene("Interior_A");
     }
+
     onInitialize(_engine) {
         super.onInitialize(_engine);
+
+
         //this.testTextbox = new BigTextBox();
      //   this.add(this.testTextbox);
 
+
+
     }
+onPreUpdate(_engine, _delta) {
+    super.onPreUpdate(_engine, _delta);
+    if(this.hendrik!=null) {
+        this.hendrik.rotation =1.56;
+
+        console.log(this.hendrik.rotation)
+    }
+}
 
     onActivate(_context) {
         super.onActivate(_context);
@@ -199,8 +158,8 @@ export class TestScene extends ExtendedScene
       //  _context.engine.currentScene.camera.strategy.elasticToActor(GameStateController.instance.player,0.1,0.1);
         //_context.engine.currentScene.camera.strategy.limitCameraBounds(new BoundingBox({top:0,bottom:1600,left:0, right:2900}));
 
-       _context.engine.showDebug(true);
-        this.showTutorialMessage();
+       //_context.engine.showDebug(true);
+
         const policeTrigger1 = new Interactable(32, 32, this.showPoliceMessage);
         policeTrigger1.pos = new Vector(1369,896);
         const bloodMessageTrigger  = new Interactable(32, 32, this.showBloodExaminationMessage);
@@ -212,7 +171,36 @@ export class TestScene extends ExtendedScene
          _context.engine.currentScene.add(newRoomTrigger);
          GameStateController.getEngine().add(bloodMessageTrigger);
         GameStateController.playBGM(Resources.bgmExterior,0.5,true);
-        this.defineCollisions();
+      //  this.defineCollisions();
+
+
+        this.sam = new NPC({width:32,height:32, pos: new Vector(1402,435)});
+        this.sam.graphics.use(Resources.npc_cop.toSprite());
+        this.sam.setInteractionBox(640,640);
+        this.sam.scale = new Vector(0.3,0.3);
+        this.sam.genericDialogue = new Dialogue("Sam", ["Hello, thank you for investigating the case.", "Let me know if you need something."],"");
+        this.sam.vel = new Vector(12,12);
+        this.add(this.sam);
+
+        this.cornelius = new NPC({width:32,height:32, pos: new Vector(709,608)});
+        this.cornelius.graphics.use(Resources.npc_white_hat.toSprite());
+        this.cornelius.setInteractionBox(640,640);
+        this.cornelius.scale = new Vector(0.3,0.3);
+        this.cornelius.genericDialogue = new Dialogue("Cornelius", ["This is awful.", "Why you so fat.?", "Bogos Binted"],"");
+        this.cornelius.rotation =1.56;
+        this.add( this.cornelius);
+
+        this.hendrik = new NPC({width:32,height:32, pos: new Vector(1181,1111)});
+        this.hendrik.graphics.use(Resources.npc_cap_brown.toSprite());
+        this.hendrik.setInteractionBox(640,640);
+        this.hendrik.scale = new Vector(0.3,0.3);
+
+        this.hendrik.genericDialogue = new Dialogue("Hendrik", ["Lmao"],"");
+        this.add( this.hendrik);
+
+
+
+        this.showTutorialMessage();
     }
 
 }

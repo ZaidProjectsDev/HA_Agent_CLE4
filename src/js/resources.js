@@ -20,6 +20,12 @@ import pianoD from '../sound/piano/D.wav';
 import pianoImg from '../images/Piano.jpg';
 import asset_snd_popup from '../sound/menu/blipSelect.wav'
 import asset_spt_interact from '../images/sprites/Interact.png';
+import asset_spt_npc_cop from '../images/sprites/cop.png';
+import asset_spt_npc_cap_brown from '../images/sprites/cap_brown.png';
+import asset_spt_npc_top_hat_brown from '../images/sprites/top_hat_brown.png';
+import asset_spt_npc_white_hat from '../images/sprites/white_hat.png';
+import asset_spt_npc_lady_blue from '../images/sprites/lady_blue.png';
+import asset_spt_npc_lady_red from '../images/sprites/lady_red.png';
 const Resources = {
     Fish: new ImageSource(fishImage),
     GenericNoise: new ImageSource(genericNoise),
@@ -41,8 +47,13 @@ const Resources = {
     pianoD: new Sound(pianoD),
     pianoImg: new ImageSource(pianoImg),
     sptInteract: new ImageSource(asset_spt_interact),
-    sptHat : new ImageSource(asset_spt_hat)
-
+    sptHat : new ImageSource(asset_spt_hat),
+    npc_cop: new ImageSource(asset_spt_npc_cop),
+    npc_cap_brown : new ImageSource(asset_spt_npc_cap_brown),
+    npc_top_hat: new ImageSource(asset_spt_npc_top_hat_brown),
+    npc_white_hat: new ImageSource(asset_spt_npc_white_hat),
+    npc_lady_blue: new ImageSource(asset_spt_npc_lady_blue),
+    npc_lady_red: new ImageSource(asset_spt_npc_lady_red)
 }
 const resourceArray = []
 for (const key in Resources) {
