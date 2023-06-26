@@ -169,16 +169,16 @@ onPreUpdate(_engine, _delta) {
 
        //_context.engine.showDebug(true);
 
-        const policeTrigger1 = new Interactable(32, 32, this.showPoliceMessage);
-        policeTrigger1.pos = new Vector(1369,896);
+      //  const policeTrigger1 = new Interactable(32, 32, this.showPoliceMessage);
+     //   policeTrigger1.pos = new Vector(1369,896);
         const bloodMessageTrigger  = new Interactable(32, 32, this.showBloodExaminationMessage);
         bloodMessageTrigger .pos = new Vector(2449,264);
         const newRoomTrigger = new Interactable(256, 32, this.goToInteriorA);
         newRoomTrigger.pos = new Vector(2445,79);
 
-            _context.engine.currentScene.add(policeTrigger1);
+          //  _context.engine.currentScene.add(policeTrigger1);
          _context.engine.currentScene.add(newRoomTrigger);
-         GameStateController.getEngine().add(bloodMessageTrigger);
+        // GameStateController.getEngine().add(bloodMessageTrigger);
         GameStateController.playBGM(Resources.bgmExterior,0.5,true);
       //  this.defineCollisions();
 
@@ -189,8 +189,6 @@ onPreUpdate(_engine, _delta) {
         this.sam.scale = new Vector(0.3,0.3);
         this.sam.genericDialogue = new Dialogue("Sam", ["Hello, thank you for investigating the case.", "Let me know if you need something."],"", this.sam);
         this.sam.missionDialogue = new Dialogue("Sam", ["Eh I am used to people dying around me.","...","If the Wanderson Melody helps you solve the murder case, it ends in a B. Try that?"],"",this.sam);
-
-        this.sam.vel = new Vector(12,12);
         this.add(this.sam);
 
         this.cornelius = new NPC({width:32,height:32, pos: new Vector(709,608)});
