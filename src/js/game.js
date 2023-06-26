@@ -38,7 +38,6 @@ export class Game extends Engine {
         this.addScene("testScene", new TestScene());
         this.addScene("Interior_A", new Interior_A());
         this.addScene("MainMenu", new MainMenu());
-        this.addScene("Interior_A", new Interior_A())
         this.addScene("PianoTestScene", new PianoTestScene())
         //this.start(ResourceLoader).then(() => this.goToScene('Interior_A',{engine:this}));
         this.start(ResourceLoader).then(() => this.goToScene('MainMenu',{engine:this}));
