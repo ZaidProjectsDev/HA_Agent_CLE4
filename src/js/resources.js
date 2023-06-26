@@ -12,6 +12,7 @@ import asset_bgm_interior_a from '../sound/bgm/Interior_A.mp3';
 import asset_bgb_exterior from '../sound/bgm/Exterior.mp3';
 import asset_snd_wrong from '../sound/menu/Wrong.wav';
 import asset_snd_unlock from '../sound/menu/Door_open.mp3';
+import asset_snd_unlock_piano from '../sound/menu/Unlock.wav';
 import asset_spt_hat from '../images/sprites/DetectiveHat.png';
 import pianoA from '../sound/piano/A.wav';
 import pianoB from '../sound/piano/B.wav';
@@ -26,6 +27,13 @@ import asset_spt_npc_top_hat_brown from '../images/sprites/top_hat_brown.png';
 import asset_spt_npc_white_hat from '../images/sprites/white_hat.png';
 import asset_spt_npc_lady_blue from '../images/sprites/lady_blue.png';
 import asset_spt_npc_lady_red from '../images/sprites/lady_red.png';
+import asset_snd_voice1 from '../sound/voice/Voice1.wav';
+import asset_snd_voice2 from '../sound/voice/Voice2.wav';
+import asset_snd_voice3 from '../sound/voice/Voice3.wav';
+import asset_snd_voice4 from '../sound/voice/Voice4.wav';
+import asset_snd_voice5 from '../sound/voice/Voice5.wav';
+import asset_snd_voice6 from '../sound/voice/Voice6.wav';
+import asset_snd_voice7 from '../sound/voice/Voice7.wav';
 const Resources = {
     Fish: new ImageSource(fishImage),
     GenericNoise: new ImageSource(genericNoise),
@@ -41,6 +49,7 @@ const Resources = {
     sndPopUp: new Sound(asset_snd_popup),
     sndUnlock: new Sound(asset_snd_unlock),
     sndWrong: new Sound(asset_snd_wrong),
+    sndUnlockPiano: new Sound(asset_snd_unlock_piano),
     pianoA: new Sound(pianoA),
     pianoB: new Sound(pianoB),
     pianoC: new Sound(pianoC),
@@ -53,7 +62,14 @@ const Resources = {
     npc_top_hat: new ImageSource(asset_spt_npc_top_hat_brown),
     npc_white_hat: new ImageSource(asset_spt_npc_white_hat),
     npc_lady_blue: new ImageSource(asset_spt_npc_lady_blue),
-    npc_lady_red: new ImageSource(asset_spt_npc_lady_red)
+    npc_lady_red: new ImageSource(asset_spt_npc_lady_red),
+    voice_1: new Sound(asset_snd_voice1),
+    voice_2: new Sound(asset_snd_voice2),
+    voice_3: new Sound(asset_snd_voice3),
+    voice_4: new Sound(asset_snd_voice4),
+    voice_5: new Sound(asset_snd_voice5),
+    voice_6: new Sound(asset_snd_voice6),
+    voice_7: new Sound(asset_snd_voice7),
 }
 const resourceArray = []
 for (const key in Resources) {

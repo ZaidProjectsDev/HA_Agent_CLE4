@@ -113,7 +113,7 @@ export class Player extends Actor
         if(this.engine.input.keyboard.isHeld(Input.Keys.ShiftLeft) || this.engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.Face2))
         {
 
-            this.moveMultiplier = 4;
+            this.moveMultiplier = 2;
         }
         else
         {

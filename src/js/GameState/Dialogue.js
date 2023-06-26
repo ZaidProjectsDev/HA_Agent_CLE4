@@ -8,11 +8,14 @@ export class Dialogue
     lines
     endFunction
     internalLineIterator
-    constructor(speaker,lines,endFunction) {
+    actor
+    playSound
+    constructor(speaker,lines,endFunction,actor) {
         this.speaker= speaker;
         this.lines = lines;
         this.endFunction = endFunction;
         this.internalLineIterator = 0;
+        this.actor = actor;
         console.log(lines[0]);
     }
     getNextLine()

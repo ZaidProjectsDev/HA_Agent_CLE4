@@ -12,9 +12,10 @@ export class Puzzle extends ex.Actor
     isChecking;
     canContinue;
     keyPressed;
+    keyHeld
     onInitialize(_engine) {
         super.onInitialize(_engine);
-        this.expectedSequence = ['KeyA', 'KeyB', 'KeyC', 'KeyD'];
+        this.expectedSequence = ['KeyD', 'KeyC', 'KeyA', 'KeyB'];
         this.playerInputKb = [];
         this.playerInputGp = [];
         this.isChecking = false;
@@ -56,24 +57,51 @@ export class Puzzle extends ex.Actor
     getPlayerInput (_engine) {
 
             //add check to make sure confirmation key is ignored
+        const keyWasPressed = false;
         if(_engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.Face1))
         {
-            console.log("Check");
-        }
-        if(_engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.Face2)) {
+            if(!this.keyHeld) {
+                console.log("A");
+                this.playerInputKb.push('KeyA');
+                GameStateController.playSound(Resources.pianoC, 1)
+                this.keyHeld = true;
 
-            console.log("A");
+            }
         }
-        if(_engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.Face3))
-        {
-            console.log("B");
-        }
-        if(_engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.Face4))
-        {
+        else {
+            if (_engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.Face2)) {
 
-            console.log("Leave");
-        }
+                if (!this.keyHeld) {
+                    console.log("B");
+                    this.playerInputKb.push('KeyB');
+                    GameStateController.playSound(Resources.pianoA, 1)
+                    this.keyHeld = true;
 
+                }
+            } else {
+                if (_engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.Face3)) {
+                    if (!this.keyHeld) {
+                        console.log("C");
+                        this.playerInputKb.push('KeyC');
+                        GameStateController.playSound(Resources.pianoB, 1)
+                        this.keyHeld = true;
+
+                    }
+                } else {
+                    if (_engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.Face4)) {
+                        if (!this.keyHeld) {
+                            this.playerInputKb.push('KeyD');
+                            GameStateController.playSound(Resources.pianoD, 1)
+                            console.log("D");
+                            this.keyHeld = true;
+
+                        }
+                    } else {
+                        this.keyHeld = false;
+                    }
+                }
+            }
+        }
         if(_engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.LeftBumper))
         {
             console.log("C _ LeftBumper");
@@ -83,8 +111,12 @@ export class Puzzle extends ex.Actor
             console.log("D _RightBumper");
         }
 
-            if(_engine.input.keyboard.getKeys().length>0) {
+            if(_engine.input.keyboard.getKeys().length>0 || _engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.Face1)||
+                _engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.Face2)||
+                _engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.Face3)||
+                _engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.Face4)) {
                 if(this.keyPressed!=_engine.input.keyboard.getKeys()[0] ) {
+                    if(this.keyHeld == false)
                     this.keyPressed = _engine.input.keyboard.getKeys()[0];
 
 
