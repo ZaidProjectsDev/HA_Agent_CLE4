@@ -4,8 +4,10 @@
 import {Player} from "../Player/Player.js";
 import {BigTextBox} from "../Textbox/BigTextBox.js";
 import {Textbox} from "../Textbox/Textbox.js";
-import {Actor, Sound, Vector} from "excalibur";
+import {Actor, CollisionType, Color, Sound, Vector} from "excalibur";
 import {Resources} from "../resources.js";
+import {SoundProperty} from "./SoundProperty.js";
+import {Dialogue} from "./Dialogue.js";
 
 const GameState =
     {
@@ -15,11 +17,7 @@ const GameState =
         Paused: "Paused",
         Gameplay: "Gameplay"
     }
-    const SoundProperty={
-        gameVolume:"GameVolume",
-        musicVolume: "MusicVolume",
-        soundVolume: "SoundVolume"
-    }
+
     export class GameStateController {
         static instance
         /**
@@ -42,6 +40,12 @@ const GameState =
         gameVolume
         currentPlayingBGM
         interactionIcon
+        pianoCompleted
+        pianoWasIncorrect
+        xmlParser
+        lastSpawnPosition
+        lastUsedDialog
+        wasShowingDialog
         constructor(engine) {
             if(GameStateController.instance == null)
             {
@@ -49,14 +53,77 @@ const GameState =
             }
             GameStateController.instance.engine = engine;
             GameStateController.instance.currentGameState = GameState.MainMenu
-            GameStateController.setVolumeProperty(SoundProperty.gameVolume,1);
+            GameStateController.setVolumeProperty(SoundProperty.gameVolume,0.5);
             GameStateController.setVolumeProperty(SoundProperty.soundVolume,0.7);
             GameStateController.setVolumeProperty(SoundProperty.musicVolume,0.45);
+            GameStateController.instance.pianoWasIncorrect = false
+            GameStateController.instance.pianoCompleted = false;
+
         }
 
         setGameState(newGameState)
         {
             this.currentGameState = newGameState;
+        }
+        static runFunctionOfDeceasedDialog() {
+            if (GameStateController.instance.lastUsedDialog != null) {
+                GameStateController.instance.lastUsedDialog.runEndFunction();
+            }
+        }
+        static checkForDialog()
+        {
+            GameStateController.runFunctionOfDeceasedDialog();
+          //  GameStateController.instance.lastUsedDialog = null;
+        }
+        ///ChagtGPT Experiment
+        static wrapText(text, maxLength) {
+            if (text.length > maxLength) {
+                let wrappedText = '';
+                let remainingText = text;
+
+                while (remainingText.length > maxLength) {
+                    let chunk = remainingText.substring(0, maxLength);
+                    let lastSpaceIndex = chunk.lastIndexOf(' ');
+
+                    // If there is no space within the chunk, find the next space after the chunk
+                    if (lastSpaceIndex === -1) {
+                        lastSpaceIndex = remainingText.indexOf(' ', maxLength);
+                    }
+
+                    // If a space is found, break the chunk at that space
+                    if (lastSpaceIndex !== -1) {
+                        chunk = remainingText.substring(0, lastSpaceIndex);
+                        remainingText = remainingText.substring(lastSpaceIndex + 1);
+                    } else {
+                        // If no space is found, break the chunk at the maxLength
+                        remainingText = remainingText.substring(maxLength);
+                    }
+
+                    wrappedText += chunk + '\n';
+                }
+
+                wrappedText += remainingText;
+                return wrappedText;
+            }
+
+            return text;
+        }
+        ///
+        static checkForRequiredStuff()
+        {
+
+            if(GameStateController.instance.pianoCompleted)
+            {
+              //  GameStateController.showTextBoxMessage("You", "Whoa! Something interesting happened.");
+            }
+            if(  GameStateController.instance.pianoWasIncorrect)
+            {
+             //   GameStateController.showTextBoxMessage("You", "Whoa! Something bad happened.");
+              GameStateController.showDialogueMessage(new Dialogue("You", ["Oh shit, I fucked up.", "I mean, I really really fucked this up good.", "I should be fired"], "GameStateController.instance.engine.currentScene.goToExterior"));
+                GameStateController.instance.pianoWasIncorrect = false;
+            }
+
+             
         }
         /**
          *
@@ -133,6 +200,21 @@ const GameState =
             GameStateController.getEngine().add(GameStateController.instance.textBox);
             GameStateController.instance.textBox.typeOutText(speaker,content);
         }
+        static showDialogueLastInteractor()
+        {
+
+        }
+        static showDialogueMessage(Dialogue)
+        {
+            if(GameStateController.instance.textBox != null)
+            {
+                GameStateController.instance.textBox.kill();
+            }
+            GameStateController.instance.textBox = new Textbox(GameStateController.instance.engine);
+            GameStateController.getEngine().add(GameStateController.instance.textBox);
+            GameStateController.instance.textBox.showDialogue(Dialogue)
+        }
+
         static setInteractionIconState(showing, position)
         {
             if(GameStateController.instance.interactionIcon!= null)
@@ -171,11 +253,14 @@ const GameState =
         {
             switch (soundProperty)
             {
-                case SoundProperty.soundVolume: GameStateController.instance.soundVolume = volume;
+                case SoundProperty.soundVolume:
+                    GameStateController.instance.soundVolume = volume;
                     break;
-                case SoundProperty.musicVolume: GameStateController.instance.musicVolume = volume;
+                case SoundProperty.musicVolume:
+                    GameStateController.instance.musicVolume = volume;
                     break;
-                case SoundProperty.gameVolume: GameStateController.instance.gameVolume = volume;
+                case SoundProperty.gameVolume:
+                    GameStateController.instance.gameVolume = volume;
                     break;
             }
         }
@@ -187,6 +272,10 @@ const GameState =
          */
        static playSound(sound, volume)
         {
+            if(GameStateController.instance.gameVolume==0)
+            {
+                return;
+            }
             sound.play(volume*GameStateController.instance.soundVolume*GameStateController.instance.gameVolume)
         }
         /**
@@ -198,6 +287,10 @@ const GameState =
          */
        static playBGM(bgm, volume, loop)
         {
+            if(GameStateController.instance.gameVolume==0)
+            {
+                return;
+            }
             if(bgm == GameStateController.instance.currentPlayingBGM)
             {
                 if(GameStateController.instance.currentPlayingBGM.isPlaying())
@@ -207,9 +300,81 @@ const GameState =
             }
             else
             {
+                if(GameStateController.instance.currentPlayingBGM!=null)
+                {
+                    GameStateController.instance.currentPlayingBGM.stop();
+                    GameStateController.instance.currentPlayingBGM = null;
+                }
                 GameStateController.instance.currentPlayingBGM = bgm;
                 GameStateController.instance.currentPlayingBGM.play(volume * GameStateController.instance.musicVolume * GameStateController.instance.gameVolume)
                 GameStateController.instance.currentPlayingBGM.loop = loop;
+            }
+        }
+
+        static parseXMLToCollider(filePath)
+        {
+         //   GameStateController.getEngine().showDebug(true);
+            const xmlData = filePath/// fs.readFileSync(filePath, 'utf-8');
+            // Create a parser object
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(xmlData, 'text/xml');
+            // Get all mxGeometry elements
+            const mxGeometryElements = xmlDoc.getElementsByTagName('mxGeometry');
+            // Convert mxGeometry elements to Box Colliders
+            for (let i = 0; i < mxGeometryElements.length; i++) {
+                const mxGeometryElement = mxGeometryElements[i];
+                const x = parseInt(mxGeometryElement.getAttribute('x'));
+                const y = parseInt(mxGeometryElement.getAttribute('y'));
+                const width = parseInt(mxGeometryElement.getAttribute('width'));
+                const height = parseInt(mxGeometryElement.getAttribute('height'));
+                const style = mxGeometryElement.parentElement.getAttribute('style');
+
+                let shorterSide = Math.min(width, height);
+                let radius = 0.5 * shorterSide;
+                // Create Box Collider using mxGeometry attributes
+                if(style.toString().includes("ellipse"))
+                {
+                    const boxCollider = new Actor({
+                        collisionType: CollisionType.Fixed,
+                        radius : radius,
+                        color: Color.Red,
+                        pos : new Vector(x+radius,y+radius),
+                        // Set other properties like position, color, collision type, etc.
+                    });
+                    GameStateController.getEngine().currentScene.add(boxCollider);
+                }
+                else
+                {
+
+                    if(style.toString().includes("rotation=90;"))
+                    {
+                        const boxCollider = new Actor({
+                            width: width,
+                            height: height,
+                            collisionType: CollisionType.Fixed,
+                            color: Color.Red,
+                            pos : new Vector(x,y),
+                            anchor: new Vector(0,0),
+                            // Set other properties like position, color, collision type, etc.
+                        });
+                        GameStateController.getEngine().currentScene.add(boxCollider);
+
+
+                    }
+                    else {
+                        const boxCollider = new Actor({
+                            width: width,
+                            height: height,
+                            collisionType: CollisionType.Fixed,
+                            color: Color.Red,
+                            pos : new Vector(x,y),
+                            anchor: new Vector(0,0),
+                            // Set other properties like position, color, collision type, etc.
+                        });
+                        GameStateController.getEngine().currentScene.add(boxCollider);
+                    }
+                }
+
             }
         }
 
