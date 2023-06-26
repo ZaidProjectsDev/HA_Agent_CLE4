@@ -11,6 +11,8 @@ import asset_interior_a from '../images/interior/Interior_A.jpg';
 import asset_bgm_interior_a from '../sound/bgm/Interior_A.mp3';
 import asset_snd_popup from '../sound/menu/blipSelect.wav'
 import asset_spt_interact from '../images/sprites/Interact.png';
+import logo_image from '../images/Melodies_of_Enigma.png';
+
 const Resources = {
     Fish: new ImageSource(fishImage),
     GenericNoise: new ImageSource(genericNoise),
@@ -23,7 +25,8 @@ const Resources = {
     bkgInteriorA: new ImageSource(asset_interior_a),
     bgmInteriorA: new Sound(asset_bgm_interior_a),
     sndPopUp: new Sound(asset_snd_popup),
-    sptInteract: new ImageSource(asset_spt_interact)
+    sptInteract: new ImageSource(asset_spt_interact),
+    logo_image: new ImageSource(logo_image)
 }
 const resourceArray = []
 for (const key in Resources) {

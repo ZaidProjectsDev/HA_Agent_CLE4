@@ -4,9 +4,12 @@ export class Button extends Actor {
   label;
   backgroundImage;
   text;
-  constructor(text, pos) {
+  constructor(text, pos, newWidth, newHeight) {
     super({
       pos: pos,
+
+      height: newHeight,
+      width: newWidth
     });
     this.text = text;
   }

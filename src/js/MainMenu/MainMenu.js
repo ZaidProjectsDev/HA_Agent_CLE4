@@ -1,6 +1,6 @@
 import {ExtendedScene} from "../Scenes/ExtendedScene.js";
 import {Button} from "../Generics/Button.js";
-import {Vector} from "excalibur";
+import {Vector, Color, Actor} from "excalibur";
 import {GameStateController} from "../GameState/GameStateController.js";
 export class MainMenu extends ExtendedScene
 { 
@@ -11,15 +11,30 @@ export class MainMenu extends ExtendedScene
     onActivate(_context) {
         super.onActivate(_context);
 
-        let button = new Button('This is a button', new Vector(_context.engine.halfCanvasWidth,_context.engine.halfCanvasHeight))
+        _context.engine.backgroundColor = Color.fromHex('#39545D');
 
-        this.add(button)
 
-        button.on('pointerup', function (ev){
-            
+
+        let startbutton = new Button('Start Game', new Vector(700,850),300, 300)
+
+        let soundbutton = new Button('Start Game', new Vector(1300,850),800, 300)
+
+        this.add(startbutton)
+
+        this.add(soundbutton)
+
+        startbutton
+        soundbutton
+
+        startbutton.on('pointerup', function (ev){
+
             _context.engine.goToScene('testScene');
         });
 
+        soundbutton.on('pointerup', function (ev) {
+
+            _context.engine.goToScene('testScene');
+        });
     }
 
 }
