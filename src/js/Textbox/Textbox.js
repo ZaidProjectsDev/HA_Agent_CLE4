@@ -184,6 +184,9 @@ export class Textbox extends Actor
 
                             if(this.contentLabel.text =="")
                             {
+                                if(this.currentDialogue.playSound!=null){
+                                    GameStateController.stopSound();
+                                }
                                 GameStateController.instance.lastUsedDialog = this.currentDialogue;
                                 this.currentDialogue.actor.dialogueDone = true;
                                 this.currentDialogue = null;

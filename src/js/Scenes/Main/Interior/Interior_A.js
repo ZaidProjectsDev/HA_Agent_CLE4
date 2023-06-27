@@ -21,7 +21,7 @@ export class Interior_A extends ExtendedScene
         this.setBackground(Resources.bkgInteriorA.toSprite(),new Vector(2,2));
         if(GameStateController.instance.pianoWasIncorrect)
         {
-            this.spawnPlayer( new Vector(1659,998));
+            this.spawnPlayer( new Vector(1600,998));
         }
         else {
             this.spawnPlayer(new Vector(1354, 1240));
@@ -83,7 +83,8 @@ export class Interior_A extends ExtendedScene
         this.johanna.genericDialogue = new Dialogue("Johanna", ["Oh no my husband!"],"", this.johanna);
         this.johanna.missionDialogue =  new Dialogue("Johanna", ["A melody?", "Well, we have a piano in the main hall.", "My husband loved to play the piano"],"", this.johanna);
         this.johanna.canUseMissionDialogue = GameStateController.instance.joannaMission;
-
+        this.johanna.genericDialogue.playSound = Resources.voice_2;
+        this.johanna.missionDialogue.playSound = Resources.voice_2;
         this.johanna.rotation =-1.2;
         this.add(this.johanna);
 
@@ -95,6 +96,8 @@ export class Interior_A extends ExtendedScene
         this.aletta.genericDialogue = new Dialogue("Aletta", ["Dont talk to me.", "I didn't do squat!", "AGGGH!"],"", this.aletta);
         this.aletta.missionDialogue = new Dialogue("Aletta", ["A melody?", "The Wanderson Melody?", "I think t started with the D tone?", "Why do you need it anyway?", "Try heading outside, someone else probably knows the rest."],"", this.aletta)
         this.aletta.canUseMissionDialogue = GameStateController.instance.alettaMission;
+        this.aletta.genericDialogue.playSound = Resources.voice_6;
+        this.aletta.missionDialogue.playSound = Resources.voice_6;
         this.aletta.rotation =-1;
         this.add(this.aletta);
 
