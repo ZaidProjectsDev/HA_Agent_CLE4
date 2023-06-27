@@ -21,7 +21,7 @@ export class Interior_A extends ExtendedScene
         this.setBackground(Resources.bkgInteriorA.toSprite(),new Vector(2,2));
         if(GameStateController.instance.pianoWasIncorrect)
         {
-            this.spawnPlayer( new Vector(1600,998));
+            this.spawnPlayer( new Vector(1450,998));
         }
         else {
             this.spawnPlayer(new Vector(1354, 1240));

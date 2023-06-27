@@ -55,50 +55,59 @@ export class TestScene extends ExtendedScene
     {
 
         GameStateController.parseXMLToCollider("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-            "<mxfile host=\"app.diagrams.net\" modified=\"2023-06-21T12:32:46.128Z\" agent=\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.51\" version=\"21.3.6\" etag=\"TpwoRuWfWwxcMMcTJ5kE\" type=\"google\">\n" +
-            "  <diagram name=\"Page-1\" id=\"T5fxANU6uVSpAXNNg0ao\">\n" +
-            "    <mxGraphModel dx=\"5490\" dy=\"3153\" grid=\"1\" gridSize=\"10\" guides=\"1\" tooltips=\"1\" connect=\"1\" arrows=\"1\" fold=\"1\" page=\"1\" pageScale=\"1\" pageWidth=\"1654\" pageHeight=\"1169\" math=\"0\" shadow=\"0\">\n" +
+            "<mxfile host=\"app.diagrams.net\" modified=\"2023-06-27T13:08:12.522Z\" agent=\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.51\" version=\"21.5.0\" etag=\"Bzrpx3uUCdyuKSmiQOLq\" type=\"google\">\n" +
+            "  <diagram name=\"Page-1\" id=\"GEQi9iQmTDPBtfJp1MQt\">\n" +
+            "    <mxGraphModel dx=\"5926\" dy=\"4512\" grid=\"1\" gridSize=\"10\" guides=\"1\" tooltips=\"1\" connect=\"1\" arrows=\"1\" fold=\"1\" page=\"1\" pageScale=\"1\" pageWidth=\"1654\" pageHeight=\"1169\" math=\"0\" shadow=\"0\">\n" +
             "      <root>\n" +
             "        <mxCell id=\"0\" />\n" +
             "        <mxCell id=\"1\" parent=\"0\" />\n" +
-            "        <mxCell id=\"2\" value=\"\" style=\"rounded=0;whiteSpace=wrap;html=1;\" vertex=\"1\" parent=\"1\">\n" +
-            "          <mxGeometry x=\"520\" width=\"110\" height=\"1518\" as=\"geometry\" />\n" +
+            "        <mxCell id=\"2\" value=\"\" style=\"ellipse;whiteSpace=wrap;html=1;aspect=fixed;\" vertex=\"1\" parent=\"1\">\n" +
+            "          <mxGeometry x=\"1030\" y=\"40\" width=\"80\" height=\"80\" as=\"geometry\" />\n" +
             "        </mxCell>\n" +
-            "        <mxCell id=\"3\" value=\"\" style=\"rounded=0;whiteSpace=wrap;html=1;\" vertex=\"1\" parent=\"1\">\n" +
-            "          <mxGeometry x=\"1900\" y=\"550\" width=\"580\" height=\"180\" as=\"geometry\" />\n" +
+            "        <mxCell id=\"3\" value=\"\" style=\"ellipse;whiteSpace=wrap;html=1;aspect=fixed;\" vertex=\"1\" parent=\"1\">\n" +
+            "          <mxGeometry x=\"1030\" y=\"300\" width=\"80\" height=\"80\" as=\"geometry\" />\n" +
             "        </mxCell>\n" +
-            "        <mxCell id=\"4\" value=\"\" style=\"rounded=0;whiteSpace=wrap;html=1;\" vertex=\"1\" parent=\"1\">\n" +
-            "          <mxGeometry x=\"620\" y=\"1458\" width=\"2080\" height=\"60\" as=\"geometry\" />\n" +
+            "        <mxCell id=\"4\" value=\"\" style=\"ellipse;whiteSpace=wrap;html=1;aspect=fixed;\" vertex=\"1\" parent=\"1\">\n" +
+            "          <mxGeometry x=\"840\" y=\"980\" width=\"240\" height=\"240\" as=\"geometry\" />\n" +
             "        </mxCell>\n" +
             "        <mxCell id=\"5\" value=\"\" style=\"rounded=0;whiteSpace=wrap;html=1;\" vertex=\"1\" parent=\"1\">\n" +
-            "          <mxGeometry x=\"630\" width=\"1660\" height=\"60\" as=\"geometry\" />\n" +
+            "          <mxGeometry x=\"1860\" y=\"-150\" width=\"400\" height=\"320\" as=\"geometry\" />\n" +
             "        </mxCell>\n" +
             "        <mxCell id=\"6\" value=\"\" style=\"rounded=0;whiteSpace=wrap;html=1;\" vertex=\"1\" parent=\"1\">\n" +
-            "          <mxGeometry x=\"2600\" width=\"98\" height=\"1460\" as=\"geometry\" />\n" +
+            "          <mxGeometry x=\"2590\" y=\"-160\" width=\"400\" height=\"320\" as=\"geometry\" />\n" +
             "        </mxCell>\n" +
-            "        <mxCell id=\"7\" value=\"\" style=\"whiteSpace=wrap;html=1;\" vertex=\"1\" parent=\"1\">\n" +
-            "          <mxGeometry x=\"1770\" y=\"960\" width=\"50\" height=\"440\" as=\"geometry\" />\n" +
+            "        <mxCell id=\"7\" value=\"\" style=\"rounded=0;whiteSpace=wrap;html=1;\" vertex=\"1\" parent=\"1\">\n" +
+            "          <mxGeometry x=\"2220\" y=\"-310\" width=\"400\" height=\"320\" as=\"geometry\" />\n" +
             "        </mxCell>\n" +
             "        <mxCell id=\"8\" value=\"\" style=\"rounded=0;whiteSpace=wrap;html=1;\" vertex=\"1\" parent=\"1\">\n" +
-            "          <mxGeometry x=\"1820\" y=\"960\" width=\"780\" height=\"60\" as=\"geometry\" />\n" +
+            "          <mxGeometry x=\"2660\" y=\"160\" width=\"400\" height=\"1360\" as=\"geometry\" />\n" +
             "        </mxCell>\n" +
-            "        <mxCell id=\"9\" value=\"\" style=\"whiteSpace=wrap;html=1;\" vertex=\"1\" parent=\"1\">\n" +
-            "          <mxGeometry x=\"1820\" y=\"1320\" width=\"780\" height=\"80\" as=\"geometry\" />\n" +
+            "        <mxCell id=\"9\" value=\"\" style=\"rounded=0;whiteSpace=wrap;html=1;\" vertex=\"1\" parent=\"1\">\n" +
+            "          <mxGeometry x=\"160\" y=\"-98\" width=\"400\" height=\"1618\" as=\"geometry\" />\n" +
             "        </mxCell>\n" +
-            "        <mxCell id=\"10\" value=\"\" style=\"whiteSpace=wrap;html=1;\" vertex=\"1\" parent=\"1\">\n" +
-            "          <mxGeometry x=\"827\" y=\"1270\" width=\"723\" height=\"120\" as=\"geometry\" />\n" +
+            "        <mxCell id=\"10\" value=\"\" style=\"rounded=0;whiteSpace=wrap;html=1;\" vertex=\"1\" parent=\"1\">\n" +
+            "          <mxGeometry x=\"350\" y=\"1410\" width=\"2510\" height=\"110\" as=\"geometry\" />\n" +
             "        </mxCell>\n" +
-            "        <mxCell id=\"11\" value=\"\" style=\"whiteSpace=wrap;html=1;\" vertex=\"1\" parent=\"1\">\n" +
-            "          <mxGeometry x=\"1170\" y=\"960\" width=\"470\" height=\"270\" as=\"geometry\" />\n" +
+            "        <mxCell id=\"11\" value=\"\" style=\"rounded=0;whiteSpace=wrap;html=1;\" vertex=\"1\" parent=\"1\">\n" +
+            "          <mxGeometry x=\"220\" y=\"-90\" width=\"2510\" height=\"110\" as=\"geometry\" />\n" +
             "        </mxCell>\n" +
             "        <mxCell id=\"12\" value=\"\" style=\"ellipse;whiteSpace=wrap;html=1;aspect=fixed;\" vertex=\"1\" parent=\"1\">\n" +
-            "          <mxGeometry x=\"820\" y=\"960\" width=\"270\" height=\"270\" as=\"geometry\" />\n" +
+            "          <mxGeometry x=\"2360\" y=\"580\" width=\"140\" height=\"140\" as=\"geometry\" />\n" +
             "        </mxCell>\n" +
             "        <mxCell id=\"13\" value=\"\" style=\"ellipse;whiteSpace=wrap;html=1;aspect=fixed;\" vertex=\"1\" parent=\"1\">\n" +
-            "          <mxGeometry x=\"1010\" y=\"290\" width=\"120\" height=\"120\" as=\"geometry\" />\n" +
+            "          <mxGeometry x=\"2210\" y=\"600\" width=\"140\" height=\"140\" as=\"geometry\" />\n" +
             "        </mxCell>\n" +
             "        <mxCell id=\"14\" value=\"\" style=\"ellipse;whiteSpace=wrap;html=1;aspect=fixed;\" vertex=\"1\" parent=\"1\">\n" +
-            "          <mxGeometry x=\"1010\" y=\"30\" width=\"120\" height=\"120\" as=\"geometry\" />\n" +
+            "          <mxGeometry x=\"1870\" y=\"470\" width=\"40\" height=\"40\" as=\"geometry\" />\n" +
+            "        </mxCell>\n" +
+            "        <mxCell id=\"15\" value=\"\" style=\"ellipse;whiteSpace=wrap;html=1;aspect=fixed;\" vertex=\"1\" parent=\"1\">\n" +
+            "          <mxGeometry x=\"1040\" y=\"585\" width=\"40\" height=\"40\" as=\"geometry\" />\n" +
+            "        </mxCell>\n" +
+            "        <mxCell id=\"16\" value=\"\" style=\"rounded=0;whiteSpace=wrap;html=1;\" vertex=\"1\" parent=\"1\">\n" +
+            "          <mxGeometry x=\"1880\" y=\"580\" width=\"300\" height=\"161\" as=\"geometry\" />\n" +
+            "        </mxCell>\n" +
+            "        <mxCell id=\"17\" value=\"\" style=\"rounded=0;whiteSpace=wrap;html=1;\" vertex=\"1\" parent=\"1\">\n" +
+            "          <mxGeometry x=\"860\" y=\"594\" width=\"170\" height=\"31\" as=\"geometry\" />\n" +
             "        </mxCell>\n" +
             "      </root>\n" +
             "    </mxGraphModel>\n" +
@@ -163,7 +172,7 @@ onPreUpdate(_engine, _delta) {
         }
 
         this.setCameraToPlayer()
-        this.setCameraBariers(0,1600,0,2900);
+        this.setCameraBariers(0,1450,0,2700);
       //  _context.engine.currentScene.camera.strategy.elasticToActor(GameStateController.instance.player,0.1,0.1);
         //_context.engine.currentScene.camera.strategy.limitCameraBounds(new BoundingBox({top:0,bottom:1600,left:0, right:2900}));
 
@@ -180,7 +189,7 @@ onPreUpdate(_engine, _delta) {
          _context.engine.currentScene.add(newRoomTrigger);
         // GameStateController.getEngine().add(bloodMessageTrigger);
         GameStateController.playBGM(Resources.bgmExterior,0.5,true);
-      //  this.defineCollisions();
+        this.defineCollisions();
 
 
         this.sam = new NPC({width:32,height:32, pos: new Vector(1402,435)});

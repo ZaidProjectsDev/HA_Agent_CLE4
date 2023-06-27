@@ -58,7 +58,7 @@ export class Puzzle extends ex.Actor
 
             //add check to make sure confirmation key is ignored
         const keyWasPressed = false;
-        if(_engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.Face1))
+        if(_engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.Face2))
         {
             if(!this.keyHeld) {
                 console.log("A");
@@ -69,7 +69,7 @@ export class Puzzle extends ex.Actor
             }
         }
         else {
-            if (_engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.Face2)) {
+            if (_engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.Face3)) {
 
                 if (!this.keyHeld) {
                     console.log("B");
@@ -79,7 +79,7 @@ export class Puzzle extends ex.Actor
 
                 }
             } else {
-                if (_engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.Face3)) {
+                if (_engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.LeftBumper)) {
                     if (!this.keyHeld) {
                         console.log("C");
                         this.playerInputKb.push('KeyC');
@@ -88,7 +88,7 @@ export class Puzzle extends ex.Actor
 
                     }
                 } else {
-                    if (_engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.Face4)) {
+                    if (_engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.RightBumper)) {
                         if (!this.keyHeld) {
                             this.playerInputKb.push('KeyD');
                             GameStateController.playSound(Resources.pianoD, 1)
