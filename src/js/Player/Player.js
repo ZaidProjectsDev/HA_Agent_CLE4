@@ -16,7 +16,7 @@ export class Player extends Actor
     currentInteracation;
     //Todo: Add possible logic for sprite direction and context cases.
     constructor(movesSpeed) {
-        super({ width:32, height:32, radius:496, color: Color.Azure, collisionType:CollisionType.Active});
+        super({ width:32, height:32, radius:128, color: Color.Azure, collisionType:CollisionType.Active});
         this.moveVelocity = new Vector(0,0);
         this.moveSpeed = movesSpeed;
         this.body.useGravity = false;
@@ -113,7 +113,7 @@ export class Player extends Actor
         if(this.engine.input.keyboard.isHeld(Input.Keys.ShiftLeft) || this.engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.Face2))
         {
 
-            this.moveMultiplier = 1.125;
+            this.moveMultiplier = 1.5;
         }
         else
         {
