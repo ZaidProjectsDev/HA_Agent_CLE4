@@ -70,6 +70,7 @@ const GameState =
             GameStateController.instance.joannaMission = false;
             GameStateController.instance.alettaMission = false;
             GameStateController.instance.alreadyExploredInside = false;
+            GameStateController.instance.soundToPlay = null;
         }
 
         setGameState(newGameState)
@@ -320,18 +321,26 @@ const GameState =
          */
        static playSound(sound, volume)
         {
+           GameStateController.stopSound();
             if(GameStateController.instance.gameVolume==0)
             {
                 return;
-            }
+            }  if(GameStateController.instance.soundToPlay!=null) {
+            GameStateController.instance.soundToPlay.volume = 0;
+            GameStateController.instance.soundToPlay.loop = false;
+            GameStateController.instance.soundToPlay.once = true;
+        }
             GameStateController.instance.soundToPlay = sound;
             GameStateController.instance.soundToPlay.play(volume*GameStateController.instance.soundVolume*GameStateController.instance.gameVolume)
 
         }
         static stopSound()
         {
-            if(GameStateController.instance.soundToPlay!= null)
-            GameStateController.instance.soundToPlay.stop();
+            if(GameStateController.instance.soundToPlay!=null) {
+                GameStateController.instance.soundToPlay.stop()
+                GameStateController.instance.soundToPlay = null;
+            }
+
         }
         /**
          *
@@ -392,7 +401,7 @@ const GameState =
                     const boxCollider = new Actor({
                         collisionType: CollisionType.Fixed,
                         radius : radius,
-                        color: Color.Red,
+
                         pos : new Vector(x+radius,y+radius),
                         // Set other properties like position, color, collision type, etc.
                     });
@@ -407,7 +416,7 @@ const GameState =
                             width: width,
                             height: height,
                             collisionType: CollisionType.Fixed,
-                            color: Color.Red,
+
                             pos : new Vector(x,y),
                             anchor: new Vector(0,0),
                             // Set other properties like position, color, collision type, etc.
@@ -421,7 +430,7 @@ const GameState =
                             width: width,
                             height: height,
                             collisionType: CollisionType.Fixed,
-                            color: Color.Red,
+
                             pos : new Vector(x,y),
                             anchor: new Vector(0,0),
                             // Set other properties like position, color, collision type, etc.

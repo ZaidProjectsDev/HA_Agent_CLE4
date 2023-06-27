@@ -22,6 +22,7 @@ export class Dialogue
     {
         if(this.internalLineIterator>this.lines.length-1)
         {
+            GameStateController.stopSound();
             this.internalLineIterator =0;
             return "";
         }
