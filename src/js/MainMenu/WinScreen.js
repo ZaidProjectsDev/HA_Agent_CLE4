@@ -12,6 +12,7 @@ import {ReturnButton} from "./ReturnButton.js";
 import {creditsLogo} from "./creditsLogoImage.js";
 import {QrCode} from "./QrCode.js";
 export class WinMenu extends ExtendedScene
+    
 { 
     constructor() {
         super();
