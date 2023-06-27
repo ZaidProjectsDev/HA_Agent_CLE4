@@ -41,11 +41,8 @@ export class TestScene extends ExtendedScene
     showTutorialMessage()
     {
         GameStateController.instance.alreadyShowedTutorialMessage =true;
-        GameStateController.showPopUpMessage("Welcome",  "You are a detective from the Holland Rotterdam Agency who is investigating the murder of William Pirrie, chairman of Harland and Wolff."+
-                                                                                 "A famous businessman and partner of the Holland Amerika Line. He was visiting the Holland Amerika Line Office. As you were doing your investigation ,"+
-                                                                                 "someone set off an unsolicited test of a Time Machine which subsequently broke down and caused the entirety of the location to be torn apart between the Present and Past."+
-                                                                                 "You must continue your investigation into the murder, despite being stranded in various environments that change based on your interaction with them. You will jump between Past and Present and"+
-                                                                                 " must find a way to use that to your advantage or find your way back." );
+        GameStateController.showPopUpMessage("Welcome",  "You are a detective from the Holland Rotterdam Agency who is investigating the murder of William Pirrie, chairman of Harland and Wolff and famous businessman. He was visiting the headquarters at the Holland Amerika Plein. As you arrive on location, you find that there are a few suspects around. Including his best friends, wife and several staff members.\n" +
+            "Can you solve this mystery?" );
     }
     showBloodExaminationMessage()
     {

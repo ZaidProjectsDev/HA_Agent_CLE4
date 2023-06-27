@@ -28,7 +28,7 @@ export class BigTextBox extends Actor
     canContinue;
     overflowCount 
     constructor(engine) {
-        super({width:1152, height:900, color:Color.fromHex("FFE085"), anchor: new Vector(0.5,0.5)});
+        super({width:2048, height:900, color:Color.fromHex("FFE085"), anchor: new Vector(0.5,0.5)});
             this.overflowCount = 0;
             this.engine = engine;
     }
@@ -44,25 +44,25 @@ export class BigTextBox extends Actor
 
         this.speakerLabel = new Label({width:1152,height:128,font: new Font({
                 family: "helvetica",
-                size: 5,
-                unit: FontUnit.Em,
-                textAlign:TextAlign.Right
+                size: 72,
+                unit: FontUnit.Px,
+                textAlign:TextAlign.Center
             }), color:Color.Black})
         this.addChild(this.speakerLabel);
-        this.speakerLabel.anchor = new Vector(1,0.5);
+        this.speakerLabel.anchor = new Vector(0,0.5);
         this.speakerLabel.pos = new Vector(0,-300);
 
 
         this.contentLabel  = new Label({width:512,height:512,font: new Font({
                 family: "helvetica",
-                size: 32,
+                size: 64,
                 unit: FontUnit.Px,
-                textAlign:TextAlign.Center,
+                textAlign:TextAlign.Start,
             }), color:Color.Black,})
     
         this.addChild(this.contentLabel);
-        this.contentLabel.anchor = new Vector(0,0.5);
-        this.contentLabel.pos = new Vector(-50,70);
+        this.contentLabel.anchor = new Vector(0.5,0.5);
+        this.contentLabel.pos = new Vector(0,70);
 
         this.typeInterval =  new Timer({fcn:() =>this.typeWriterEffect(), interval:2, repeats: true});
         this.engine.add(this.typeInterval);

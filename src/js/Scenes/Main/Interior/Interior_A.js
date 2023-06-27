@@ -94,7 +94,7 @@ export class Interior_A extends ExtendedScene
         this.aletta.setInteractionBox(640,640);
         this.aletta.scale = new Vector(0.3,0.3);
         this.aletta.genericDialogue = new Dialogue("Aletta", ["Dont talk to me.", "I didn't do squat!", "AGGGH!"],"", this.aletta);
-        this.aletta.missionDialogue = new Dialogue("Aletta", ["A melody?", "The Wanderson Melody?", "I think t started with the D tone?", "Why do you need it anyway?", "Try heading outside, someone else probably knows the rest."],"", this.aletta)
+        this.aletta.missionDialogue = new Dialogue("Aletta", ["A melody?", "The Wanderson Melody?", "I think it started with the D tone?", "Why do you need it anyway?", "Try heading outside, someone else probably knows the rest."],"", this.aletta)
         this.aletta.canUseMissionDialogue = GameStateController.instance.alettaMission;
         this.aletta.genericDialogue.playSound = Resources.voice_6;
         this.aletta.missionDialogue.playSound = Resources.voice_6;
