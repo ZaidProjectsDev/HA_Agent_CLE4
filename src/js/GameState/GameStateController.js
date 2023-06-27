@@ -52,6 +52,7 @@ const GameState =
         joannaMission
         alettaMission
         alreadyExploredInside
+        soundToPlay
         constructor(engine) {
             if(GameStateController.instance == null)
             {
@@ -168,6 +169,7 @@ const GameState =
             GameStateController.instance.player = new Player(150);
             GameStateController.instance.player.pos = spawnLocation;
             GameStateController.instance.engine.currentScene.add(  GameStateController.instance.player);
+            GameStateController.instance.player.vel = new Vector(0,0);
         }
         /**
          *Checks if the player can move.
@@ -322,7 +324,14 @@ const GameState =
             {
                 return;
             }
-            sound.play(volume*GameStateController.instance.soundVolume*GameStateController.instance.gameVolume)
+            GameStateController.instance.soundToPlay = sound;
+            GameStateController.instance.soundToPlay.play(volume*GameStateController.instance.soundVolume*GameStateController.instance.gameVolume)
+
+        }
+        static stopSound()
+        {
+            if(GameStateController.instance.soundToPlay!= null)
+            GameStateController.instance.soundToPlay.stop();
         }
         /**
          *

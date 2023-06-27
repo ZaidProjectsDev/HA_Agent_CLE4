@@ -189,6 +189,9 @@ onPreUpdate(_engine, _delta) {
         this.sam.scale = new Vector(0.3,0.3);
         this.sam.genericDialogue = new Dialogue("Sam", ["Hello, thank you for investigating the case.", "Let me know if you need something."],"", this.sam);
         this.sam.missionDialogue = new Dialogue("Sam", ["Eh I am used to people dying around me.","...","If the Wanderson Melody helps you solve the murder case, it ends in a B. Try that?"],"",this.sam);
+        this.sam.genericDialogue.playSound = Resources.voice_5;
+        this.sam.missionDialogue.playSound = Resources.voice_5;
+
         this.add(this.sam);
 
         this.cornelius = new NPC({width:32,height:32, pos: new Vector(709,608)});
@@ -197,6 +200,8 @@ onPreUpdate(_engine, _delta) {
         this.cornelius.scale = new Vector(0.3,0.3);
         this.cornelius.genericDialogue = new Dialogue("Cornelius", ["This is awful.", "Why?", "The weather is too nice to be sad."],"",this.cornelius);
         this.cornelius.missionDialogue = new Dialogue("Cornelius", ["Oi mornin!","The Wanderson Melody is great alright."," Definitely use an A after the C tone"],"",this.cornelius);
+        this.cornelius.genericDialogue.playSound = Resources.voice_4;
+        this.cornelius.missionDialogue.playSound = Resources.voice_4;
         this.cornelius.rotation =1.56;
         this.add( this.cornelius);
 
@@ -207,6 +212,8 @@ onPreUpdate(_engine, _delta) {
 
         this.hendrik.genericDialogue = new Dialogue("Hendrik", ["Top of the morning!"],"",this.hendrik);
         this.hendrik.missionDialogue = new Dialogue("Hendrik", [" Heh morning.", "The Wanderson Melody is famous for unlocking doors.", "Try C for the second letter."],"",this.hendrik);
+        this.hendrik.genericDialogue.playSound = Resources.voice_1;
+        this.hendrik.missionDialogue.playSound = Resources.voice_1;
         this.add( this.hendrik);
 
 

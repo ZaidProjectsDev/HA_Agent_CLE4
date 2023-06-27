@@ -20,7 +20,7 @@ export class Player extends Actor
         this.moveVelocity = new Vector(0,0);
         this.moveSpeed = movesSpeed;
         this.body.useGravity = false;
-        this.interactBubble = new Actor({radius:512});
+        this.interactBubble = new Actor({radius:320});
         this.addChild(this.interactBubble);
         this.interactBubble.on('collisionstart', (evt) => {this.evaluateInteraction(evt)})
         this.interactBubble.on('collisionend', (evt) => {this.endInteraction(evt)})
