@@ -21,12 +21,18 @@ import pianoD from '../sound/piano/D.wav';
 import pianoImg from '../images/Piano.jpg';
 import asset_snd_popup from '../sound/menu/blipSelect.wav'
 import asset_spt_interact from '../images/sprites/Interact.png';
+import logo_image from '../images/Melodies_of_Enigma.png';
 import asset_spt_npc_cop from '../images/sprites/cop.png';
 import asset_spt_npc_cap_brown from '../images/sprites/cap_brown.png';
 import asset_spt_npc_top_hat_brown from '../images/sprites/top_hat_brown.png';
 import asset_spt_npc_white_hat from '../images/sprites/white_hat.png';
 import asset_spt_npc_lady_blue from '../images/sprites/lady_blue.png';
 import asset_spt_npc_lady_red from '../images/sprites/lady_red.png';
+import startButton from '../images/startGame.png';
+import soundButton from '../images/soundButton.png';
+import controlSummary from '../images/controlSummary.png';
+import arcadeStart from '../images/controlStart.png';
+import arcadeSound from '../images/controlSound.png';
 import asset_snd_voice1 from '../sound/voice/Voice1.wav';
 import asset_snd_voice2 from '../sound/voice/Voice2.wav';
 import asset_snd_voice3 from '../sound/voice/Voice3.wav';
@@ -48,6 +54,8 @@ const Resources = {
     bgmInteriorA: new Sound(asset_bgm_interior_a),
     bgmExterior: new Sound(asset_bgb_exterior),
     sndPopUp: new Sound(asset_snd_popup),
+    // sptInteract: new ImageSource(asset_spt_interact),
+    logo_image: new ImageSource(logo_image),
     sndUnlock: new Sound(asset_snd_unlock),
     sndWrong: new Sound(asset_snd_wrong),
     sndUnlockPiano: new Sound(asset_snd_unlock_piano),
@@ -64,6 +72,11 @@ const Resources = {
     npc_white_hat: new ImageSource(asset_spt_npc_white_hat),
     npc_lady_blue: new ImageSource(asset_spt_npc_lady_blue),
     npc_lady_red: new ImageSource(asset_spt_npc_lady_red),
+    StartButton: new ImageSource(startButton),
+    SoundButton: new ImageSource(soundButton),
+    ControlSummary: new ImageSource(controlSummary),
+    ArcadeStart: new ImageSource(arcadeStart),
+    ArcadeSound: new ImageSource(arcadeSound),
     voice_1: new Sound(asset_snd_voice1),
     voice_2: new Sound(asset_snd_voice2),
     voice_3: new Sound(asset_snd_voice3),
