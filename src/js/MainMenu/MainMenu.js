@@ -8,10 +8,18 @@ import {ChangeSound} from "./soundButton.js";
 import {StartControl} from "./arcadecontrolstart.js";
 import {SoundControl} from "./arcadecontrolsound.js";
 import {SummaryControls} from "./controlsummary.js";
+import {Input} from "excalibur";
+
 export class MainMenu extends ExtendedScene
-{ 
+{
+    buttonPressed
+    soundOn
     constructor() {
         super();
+
+        this.buttonPressed = false
+        this.soundOn = false;
+
     }
 
     onActivate(_context) {
@@ -59,5 +67,31 @@ export class MainMenu extends ExtendedScene
         //     _context.engine.goToScene('testScene');
         // });
     }
+
+    onPreUpdate(_engine, _delta) {
+        super.onPreUpdate(_engine, _delta);
+        if(this.engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.Face1))
+        {
+            _engine.goToScene('testScene');
+        }
+        if(this.engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.Face3))
+        {
+            if(!this.buttonPressed) {
+            this.soundOn = !this.soundOn;
+            if(this.soundOn) {
+                console.log('Audio on')
+            }
+            else {
+                console.log('Audio off')
+            }
+                this.buttonPressed = true;
+            }
+        }
+        else
+        {
+            this.buttonPressed =false;
+        }
+    }
+
 
 }
