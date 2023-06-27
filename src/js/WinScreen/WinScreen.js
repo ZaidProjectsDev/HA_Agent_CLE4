@@ -25,39 +25,9 @@ export class MainMenu extends ExtendedScene
         const buttonStart = new StartGame();
         this.add(buttonStart);
 
-        const buttonSound = new ChangeSound();
-        this.add(buttonSound);
-
         const controlStart = new StartControl();
         this.add(controlStart);
 
-        const controlSound = new SoundControl();
-        this.add(controlSound);
-
-        const controlSummary = new SummaryControls();
-        this.add(controlSummary);
-
-
-        // let startbutton = new Button('Start Game', new Vector(700,850),300, 300)
-        //
-        // let soundbutton = new Button('Start Game', new Vector(1300,850),800, 300)
-        //
-        // this.add(startbutton)
-        //
-        // this.add(soundbutton)
-        //
-        // startbutton
-        // soundbutton
-        //
-        // startbutton.on('pointerup', function (ev){
-        //
-        //     _context.engine.goToScene('testScene');
-        // });
-        //
-        // soundbutton.on('pointerup', function (ev) {
-        //
-        //     _context.engine.goToScene('testScene');
-        // });
     }
 
 }

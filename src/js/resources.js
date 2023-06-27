@@ -27,6 +27,12 @@ import asset_spt_npc_top_hat_brown from '../images/sprites/top_hat_brown.png';
 import asset_spt_npc_white_hat from '../images/sprites/white_hat.png';
 import asset_spt_npc_lady_blue from '../images/sprites/lady_blue.png';
 import asset_spt_npc_lady_red from '../images/sprites/lady_red.png';
+import startButton from '../images/startGame.png';
+import soundButton from '../images/soundButton.png';
+import controlSummary from '../images/controlSummary.png';
+import arcadeStart from '../images/controlStart.png';
+import arcadeSound from '../images/controlSound.png';
+
 const Resources = {
     Fish: new ImageSource(fishImage),
     GenericNoise: new ImageSource(genericNoise),
@@ -40,7 +46,7 @@ const Resources = {
     bgmInteriorA: new Sound(asset_bgm_interior_a),
     bgmExterior: new Sound(asset_bgb_exterior),
     sndPopUp: new Sound(asset_snd_popup),
-    sptInteract: new ImageSource(asset_spt_interact),
+    // sptInteract: new ImageSource(asset_spt_interact),
     logo_image: new ImageSource(logo_image),
     sndUnlock: new Sound(asset_snd_unlock),
     sndWrong: new Sound(asset_snd_wrong),
@@ -56,7 +62,12 @@ const Resources = {
     npc_top_hat: new ImageSource(asset_spt_npc_top_hat_brown),
     npc_white_hat: new ImageSource(asset_spt_npc_white_hat),
     npc_lady_blue: new ImageSource(asset_spt_npc_lady_blue),
-    npc_lady_red: new ImageSource(asset_spt_npc_lady_red)
+    npc_lady_red: new ImageSource(asset_spt_npc_lady_red),
+    StartButton: new ImageSource(startButton),
+    SoundButton: new ImageSource(soundButton),
+    ControlSummary: new ImageSource(controlSummary),
+    ArcadeStart: new ImageSource(arcadeStart),
+    ArcadeSound: new ImageSource(arcadeSound)
 }
 const resourceArray = []
 for (const key in Resources) {
