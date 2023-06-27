@@ -9,6 +9,7 @@ import {StartControl} from "./arcadecontrolstart.js";
 import {SoundControl} from "./arcadecontrolsound.js";
 import {SummaryControls} from "./controlsummary.js";
 import {Input} from "excalibur";
+import {SoundProperty} from "../GameState/SoundProperty.js";
 
 export class MainMenu extends ExtendedScene
 {
@@ -79,10 +80,10 @@ export class MainMenu extends ExtendedScene
             if(!this.buttonPressed) {
             this.soundOn = !this.soundOn;
             if(this.soundOn) {
-                console.log('Audio on')
+                GameStateController.setVolumeProperty(SoundProperty.gameVolume, 1)
             }
             else {
-                console.log('Audio off')
+                GameStateController.setVolumeProperty(SoundProperty.gameVolume, 0)
             }
                 this.buttonPressed = true;
             }

@@ -18,6 +18,7 @@ import {Interior_A} from "./Scenes/Main/Interior/Interior_A.js";
 import {GameStateController} from "./GameState/GameStateController.js";
 import {MainMenu} from "./MainMenu/MainMenu.js";
 import {PianoTestScene} from "./Scenes/Testing/PianoTestScene.js";
+import {WinMenu} from "./MainMenu/WinScreen.js";
 export class Game extends Engine {
 
     gameStateController
@@ -39,6 +40,7 @@ export class Game extends Engine {
         this.addScene("Interior_A", new Interior_A());
         this.addScene("MainMenu", new MainMenu());
         this.addScene("PianoTestScene", new PianoTestScene())
+        this.addScene("WinScreen", new WinMenu())
         //this.start(ResourceLoader).then(() => this.goToScene('Interior_A',{engine:this}));
         this.start(ResourceLoader).then(() => this.goToScene('MainMenu',{engine:this}));
     }
