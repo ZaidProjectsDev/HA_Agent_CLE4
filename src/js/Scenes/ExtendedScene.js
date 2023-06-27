@@ -26,11 +26,12 @@ export class ExtendedScene extends  Scene
     {
       GameStateController.getEngine().currentScene.camera.strategy.limitCameraBounds(new BoundingBox({top:top,bottom:bottom,left:left, right:right}));
     }
-    setBackground(backgroundAsset, scale)
+    setBackground(backgroundAsset, scale, pos)
     {
 
         this.backgroundImage = new Actor({width:backgroundAsset.width, height:backgroundAsset.height, anchor: new Vector(0,0)});
-       // this.backgroundImage.pos = new Vector(backgroundAsset.width/scale.x, backgroundAsset.height/scale.y);
+        if(pos!=null)
+        this.backgroundImage.pos = pos;
         this.backgroundImage.graphics.use(backgroundAsset);
         this.backgroundImage.scale = scale;
         this.add(this.backgroundImage);

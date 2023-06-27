@@ -33,7 +33,7 @@ export class Textbox extends Actor
     currentDialogue
     buttonHeld
     constructor(engine) {
-        super({width:1500, height:256, color:Color.fromHex("#fcad03"), anchor: new Vector(0.5,0)});
+        super({width:1500, height:256, color:Color.fromHex("#FFE085"), anchor: new Vector(0.5,0)});
             this.engine = engine;
     }
 

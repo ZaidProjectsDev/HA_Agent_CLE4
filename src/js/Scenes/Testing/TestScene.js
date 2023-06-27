@@ -141,7 +141,7 @@ onPreUpdate(_engine, _delta) {
     if(this.hendrik!=null) {
         this.hendrik.rotation =1.56;
 
-        console.log(this.hendrik.rotation)
+     //   console.log(this.hendrik.rotation)
     }
 }
 

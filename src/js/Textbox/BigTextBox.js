@@ -28,7 +28,7 @@ export class BigTextBox extends Actor
     canContinue;
     overflowCount 
     constructor(engine) {
-        super({width:1152, height:900, color:Color.fromHex("f18805"), anchor: new Vector(0.5,0.5)});
+        super({width:1152, height:900, color:Color.fromHex("FFE085"), anchor: new Vector(0.5,0.5)});
             this.overflowCount = 0;
             this.engine = engine;
     }
@@ -43,26 +43,26 @@ export class BigTextBox extends Actor
 
 
         this.speakerLabel = new Label({width:1152,height:128,font: new Font({
-                family: "impact",
+                family: "helvetica",
                 size: 5,
                 unit: FontUnit.Em,
                 textAlign:TextAlign.Right
-            }), color:Color.Yellow})
+            }), color:Color.Black})
         this.addChild(this.speakerLabel);
         this.speakerLabel.anchor = new Vector(1,0.5);
         this.speakerLabel.pos = new Vector(0,-300);
 
 
-        this.contentLabel  = new Label({width:1152,height:512,font: new Font({
-                family: "impact",
-                size: 3,
-                unit: FontUnit.Em,
-                textAlign:TextAlign.Start,
-            }), color:Color.White,})
+        this.contentLabel  = new Label({width:512,height:512,font: new Font({
+                family: "helvetica",
+                size: 32,
+                unit: FontUnit.Px,
+                textAlign:TextAlign.Center,
+            }), color:Color.Black,})
     
         this.addChild(this.contentLabel);
-        this.contentLabel.anchor = new Vector(0.5,0.5);
-        this.contentLabel.pos = new Vector(0,0);
+        this.contentLabel.anchor = new Vector(0,0.5);
+        this.contentLabel.pos = new Vector(-50,70);
 
         this.typeInterval =  new Timer({fcn:() =>this.typeWriterEffect(), interval:2, repeats: true});
         this.engine.add(this.typeInterval);
@@ -121,13 +121,13 @@ export class BigTextBox extends Actor
         GameStateController.instance.showingMessage = true;
         for(let i=0; i<content.length; ++i)
         {
-            if((i+32)<=content.length)
-            if(content[i+32] == '.')
+            if((i+20)<=content.length)
+            if(content[i+20] == '.')
             {
                 sanitizedContent+=content[i]+"\n" 
                 overflow =0;
             }
-            if(overflow>=64)
+            if(overflow>=20)
             {
                 sanitizedContent+="\n" 
                 sanitizedContent+=content[i]; 
@@ -143,7 +143,7 @@ export class BigTextBox extends Actor
             }
             
         }
-        this.content = GameStateController.wrapText(content,68);
+        this.content = GameStateController.wrapText(content,56);
         this.contentLabel.text = this.content;
         this.engine.clock.schedule(()=>{this.canContinue = true},500);
 

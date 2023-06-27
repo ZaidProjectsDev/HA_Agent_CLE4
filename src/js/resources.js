@@ -34,6 +34,7 @@ import asset_snd_voice4 from '../sound/voice/Voice4.wav';
 import asset_snd_voice5 from '../sound/voice/Voice5.wav';
 import asset_snd_voice6 from '../sound/voice/Voice6.wav';
 import asset_snd_voice7 from '../sound/voice/Voice7.wav';
+import asset_spt_pianohelp from '../images/interior/Puzzlescheme.png';
 const Resources = {
     Fish: new ImageSource(fishImage),
     GenericNoise: new ImageSource(genericNoise),
@@ -70,6 +71,7 @@ const Resources = {
     voice_5: new Sound(asset_snd_voice5),
     voice_6: new Sound(asset_snd_voice6),
     voice_7: new Sound(asset_snd_voice7),
+    pianoHelpImg: new ImageSource(asset_spt_pianohelp)
 }
 const resourceArray = []
 for (const key in Resources) {

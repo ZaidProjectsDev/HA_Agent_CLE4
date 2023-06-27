@@ -110,8 +110,14 @@ const GameState =
                         remainingText = remainingText.substring(maxLength);
                     }
 
+                    // Remove spaces on new lines
+                    chunk = chunk.trim().replace(/\n\s*/g, '\n');
+
                     wrappedText += chunk + '\n';
                 }
+
+                // Remove spaces on new lines from the remaining text
+                remainingText = remainingText.trim().replace(/\n\s*/g, '\n');
 
                 wrappedText += remainingText;
                 return wrappedText;
@@ -159,7 +165,7 @@ const GameState =
             {
                 GameStateController.instance.player.kill();
             }
-            GameStateController.instance.player = new Player(250);
+            GameStateController.instance.player = new Player(150);
             GameStateController.instance.player.pos = spawnLocation;
             GameStateController.instance.engine.currentScene.add(  GameStateController.instance.player);
         }
