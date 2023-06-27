@@ -33,7 +33,7 @@ export class Textbox extends Actor
     currentDialogue
     buttonHeld
     constructor(engine) {
-        super({width:1366, height:256, color:Color.fromHex("f18805"), anchor: new Vector(0.5,0)});
+        super({width:1500, height:256, color:Color.fromHex("#FFE085"), anchor: new Vector(0.5,0)});
             this.engine = engine;
     }
 
@@ -63,7 +63,7 @@ export class Textbox extends Actor
                 size: 5,
                 unit: FontUnit.Em,
                 textAlign:TextAlign.Center
-            }), color:Color.Yellow})
+            }), color:Color.Black})
         this.addChild(this.speakerLabel);
         this.speakerLabel.anchor = new Vector(0,0.5);
         this.speakerLabel.pos = new Vector(0,100);
@@ -75,7 +75,7 @@ export class Textbox extends Actor
                 size: 4,
                 unit: FontUnit.Em,
                 textAlign:TextAlign.Left
-            }), color:Color.White})
+            }), color:Color.Black})
         this.addChild(this.contentLabel);
         this.contentLabel.anchor = new Vector(0.5,0.5);
         this.contentLabel.pos = new Vector(0,210);
@@ -132,7 +132,13 @@ export class Textbox extends Actor
     {
         if(!this.showingTextBox)
         {
+            dialogue.actor.showingDialogue = true;
+
             this.currentDialogue = dialogue;
+            if(this.currentDialogue.playSound!=null)
+            {
+                GameStateController.playSound(this.currentDialogue.playSound,60.5)
+            }
             GameStateController.playSound(Resources.sndPopUp,0.85);
             this.buildNormalTextBox(this.engine);
             this.showingTextBox = true;
@@ -179,6 +185,7 @@ export class Textbox extends Actor
                             if(this.contentLabel.text =="")
                             {
                                 GameStateController.instance.lastUsedDialog = this.currentDialogue;
+                                this.currentDialogue.actor.dialogueDone = true;
                                 this.currentDialogue = null;
                                 this.completeText();
 

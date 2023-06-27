@@ -12,13 +12,23 @@ export class Interior_A extends ExtendedScene
     pianoTrigger
     johanna
     aletta
+    waluwigi
+    blackvoid
     onActivate(_context) {
         super.onActivate(_context);
+        this.setCollisions();
         _context.engine.backgroundColor = Color.Black;
         this.setBackground(Resources.bkgInteriorA.toSprite(),new Vector(2,2));
-        this.spawnPlayer( new Vector(1354,1240));
+        if(GameStateController.instance.pianoWasIncorrect)
+        {
+            this.spawnPlayer( new Vector(1659,998));
+        }
+        else {
+            this.spawnPlayer(new Vector(1354, 1240));
+        }
         this.setCameraToPlayer();
         this.setCameraBariers(150,1445,0,2640)
+        /*
         this.policeTrigger3 = new Trigger({
             width: 90,
             height: 90,
@@ -28,6 +38,19 @@ export class Interior_A extends ExtendedScene
             action: this.deadBodyExamine,
             color: Color.Red
         })
+        */
+        this.blackvoid = new Actor({collisionType:CollisionType.Fixed, color:Color.Black,width:2048,height:2048,pos: new Vector(1885,640),anchor: new Vector(0,0)})
+        this.add(this.blackvoid);
+
+        this.deadbody = new NPC({width:32,height:32, pos: new Vector(668,755)});
+       // this.deadbody.graphics.use(Resources.npc_lady_blue.toSprite());
+        this.deadbody.setInteractionBox(640,640);
+        this.deadbody.scale = new Vector(0.3,0.3);
+        this.deadbody.genericDialogue = new Dialogue("You", ["Oh dear.","Oh, there's a note.","It says...","I have done the unthinkable", "To find me, you must solve the Wanderson Melody."],"",this.deadbody);
+        this.deadbody.functionToExecute = `GameStateController.getEngine().currentScene.diaJoannaChangeState()`;
+        this.deadbody.rotation =-1.2;
+        this.add(this.deadbody);
+
         this.exteriorDoor = new Trigger({
             width: 90,
             height: 90,
@@ -42,7 +65,7 @@ export class Interior_A extends ExtendedScene
         GameStateController.getEngine().add(this.pianoTrigger);
         //GameStateController.instance.showPopUpMessage("Test", "BogosBinted");
 
-        GameStateController.getEngine().add(this.policeTrigger3);
+        GameStateController.getEngine().add(this.deadbody);
         GameStateController.getEngine().add(this.exteriorDoor);
 
         GameStateController.playBGM(Resources.bgmInteriorA,0.5,true);
@@ -51,11 +74,16 @@ export class Interior_A extends ExtendedScene
 
 
 
+
+
         this.johanna = new NPC({width:32,height:32, pos: new Vector(218,758)});
         this.johanna.graphics.use(Resources.npc_lady_blue.toSprite());
         this.johanna.setInteractionBox(640,640);
         this.johanna.scale = new Vector(0.3,0.3);
-        this.johanna.genericDialogue = new Dialogue("Johanna", ["Oh no my husband!"],"");
+        this.johanna.genericDialogue = new Dialogue("Johanna", ["Oh no my husband!"],"", this.johanna);
+        this.johanna.missionDialogue =  new Dialogue("Johanna", ["A melody?", "Well, we have a piano in the main hall.", "My husband loved to play the piano"],"", this.johanna);
+        this.johanna.canUseMissionDialogue = GameStateController.instance.joannaMission;
+
         this.johanna.rotation =-1.2;
         this.add(this.johanna);
 
@@ -64,14 +92,44 @@ export class Interior_A extends ExtendedScene
         this.aletta.graphics.use(Resources.npc_lady_red.toSprite());
         this.aletta.setInteractionBox(640,640);
         this.aletta.scale = new Vector(0.3,0.3);
-        this.aletta.genericDialogue = new Dialogue("Aletta", ["Dont talk to me.", "I didn't do squat!", "AGGGH!"],"");
+        this.aletta.genericDialogue = new Dialogue("Aletta", ["Dont talk to me.", "I didn't do squat!", "AGGGH!"],"", this.aletta);
+        this.aletta.missionDialogue = new Dialogue("Aletta", ["A melody?", "The Wanderson Melody?", "I think t started with the D tone?", "Why do you need it anyway?", "Try heading outside, someone else probably knows the rest."],"", this.aletta)
+        this.aletta.canUseMissionDialogue = GameStateController.instance.alettaMission;
         this.aletta.rotation =-1;
         this.add(this.aletta);
 
     }
+    onDeactivate(_context) {
+        super.onDeactivate(_context);
+        GameStateController.killAllActors(_context.previousScene);
+    }
+
+    diaJoannaChangeState()
+    {
+        console.log("BOGOS BINTED")
+        this.johanna.canUseMissionDialogue = true;
+        this.aletta.canUseMissionDialogue = true;
+        GameStateController.instance.alettaMission = this.aletta.canUseMissionDialogue;
+        GameStateController.instance.joannaMission = this.johanna.canUseMissionDialogue;
+        GameStateController.instance.alreadyExploredInside = true;
+        this.johanna.interactionBox.interact();
+    }
+    getRidOfBlackBox()
+    {
+        this.blackvoid.kill();
+        this.waluwigi = new NPC({width:32,height:32, pos: new Vector(2200,809)});
+        this.waluwigi.graphics.use(Resources.npc_cop.toSprite());
+        this.waluwigi.setInteractionBox(640,640);
+        this.waluwigi.scale = new Vector(0.3,0.3);
+        this.add(this.waluwigi);
+        this.waluwigi.genericDialogue = new Dialogue("Wallace Anderson", ["WHAAAAAAAAAAA!", "YOU FOUND ME??!", "NOOOOOOOOO!!!!"],"", this.waluwigi);
+        this.waluwigi.genericDialogue.playSound = Resources.voice_3;
+        GameStateController.playSound(Resources.sndUnlockPiano,9);
+
+    }
     onInitialize(_engine) {
         super.onInitialize(_engine);
-        this.setCollisions();
+
 
 
     }

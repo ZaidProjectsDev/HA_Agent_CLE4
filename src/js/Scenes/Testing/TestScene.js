@@ -40,7 +40,7 @@ export class TestScene extends ExtendedScene
     }
     showTutorialMessage()
     {
-
+        GameStateController.instance.alreadyShowedTutorialMessage =true;
         GameStateController.showPopUpMessage("Welcome",  "You are a detective from the Holland Rotterdam Agency who is investigating the murder of William Pirrie, chairman of Harland and Wolff."+
                                                                                  "A famous businessman and partner of the Holland Amerika Line. He was visiting the Holland Amerika Line Office. As you were doing your investigation ,"+
                                                                                  "someone set off an unsolicited test of a Time Machine which subsequently broke down and caused the entirety of the location to be torn apart between the Present and Past."+
@@ -121,6 +121,7 @@ export class TestScene extends ExtendedScene
     }
     goToInteriorA()
     {
+        GameStateController.instance.cameFromInside = true;
         GameStateController.playSound(Resources.sndUnlock,1);
        GameStateController.getEngine().goToScene("Interior_A");
     }
@@ -140,7 +141,7 @@ onPreUpdate(_engine, _delta) {
     if(this.hendrik!=null) {
         this.hendrik.rotation =1.56;
 
-        console.log(this.hendrik.rotation)
+     //   console.log(this.hendrik.rotation)
     }
 }
 
@@ -152,7 +153,15 @@ onPreUpdate(_engine, _delta) {
         this.setBackground(Resources.backgroundImageTest.toSprite(),new Vector(2,2));
 
 
-        GameStateController.spawnPlayer(new Vector(722,970));
+        if(GameStateController.instance.cameFromInside)
+        {
+            GameStateController.spawnPlayer(new Vector(2321,201));
+        }
+        else
+        {
+            GameStateController.spawnPlayer(new Vector(722,970));
+        }
+
         this.setCameraToPlayer()
         this.setCameraBariers(0,1600,0,2900);
       //  _context.engine.currentScene.camera.strategy.elasticToActor(GameStateController.instance.player,0.1,0.1);
@@ -160,16 +169,16 @@ onPreUpdate(_engine, _delta) {
 
        //_context.engine.showDebug(true);
 
-        const policeTrigger1 = new Interactable(32, 32, this.showPoliceMessage);
-        policeTrigger1.pos = new Vector(1369,896);
+      //  const policeTrigger1 = new Interactable(32, 32, this.showPoliceMessage);
+     //   policeTrigger1.pos = new Vector(1369,896);
         const bloodMessageTrigger  = new Interactable(32, 32, this.showBloodExaminationMessage);
         bloodMessageTrigger .pos = new Vector(2449,264);
         const newRoomTrigger = new Interactable(256, 32, this.goToInteriorA);
         newRoomTrigger.pos = new Vector(2445,79);
 
-            _context.engine.currentScene.add(policeTrigger1);
+          //  _context.engine.currentScene.add(policeTrigger1);
          _context.engine.currentScene.add(newRoomTrigger);
-         GameStateController.getEngine().add(bloodMessageTrigger);
+        // GameStateController.getEngine().add(bloodMessageTrigger);
         GameStateController.playBGM(Resources.bgmExterior,0.5,true);
       //  this.defineCollisions();
 
@@ -178,15 +187,16 @@ onPreUpdate(_engine, _delta) {
         this.sam.graphics.use(Resources.npc_cop.toSprite());
         this.sam.setInteractionBox(640,640);
         this.sam.scale = new Vector(0.3,0.3);
-        this.sam.genericDialogue = new Dialogue("Sam", ["Hello, thank you for investigating the case.", "Let me know if you need something."],"");
-        this.sam.vel = new Vector(12,12);
+        this.sam.genericDialogue = new Dialogue("Sam", ["Hello, thank you for investigating the case.", "Let me know if you need something."],"", this.sam);
+        this.sam.missionDialogue = new Dialogue("Sam", ["Eh I am used to people dying around me.","...","If the Wanderson Melody helps you solve the murder case, it ends in a B. Try that?"],"",this.sam);
         this.add(this.sam);
 
         this.cornelius = new NPC({width:32,height:32, pos: new Vector(709,608)});
         this.cornelius.graphics.use(Resources.npc_white_hat.toSprite());
         this.cornelius.setInteractionBox(640,640);
         this.cornelius.scale = new Vector(0.3,0.3);
-        this.cornelius.genericDialogue = new Dialogue("Cornelius", ["This is awful.", "Why you so fat.?", "Bogos Binted"],"");
+        this.cornelius.genericDialogue = new Dialogue("Cornelius", ["This is awful.", "Why?", "The weather is too nice to be sad."],"",this.cornelius);
+        this.cornelius.missionDialogue = new Dialogue("Cornelius", ["Oi mornin!","The Wanderson Melody is great alright."," Definitely use an A after the C tone"],"",this.cornelius);
         this.cornelius.rotation =1.56;
         this.add( this.cornelius);
 
@@ -195,12 +205,27 @@ onPreUpdate(_engine, _delta) {
         this.hendrik.setInteractionBox(640,640);
         this.hendrik.scale = new Vector(0.3,0.3);
 
-        this.hendrik.genericDialogue = new Dialogue("Hendrik", ["Lmao"],"");
+        this.hendrik.genericDialogue = new Dialogue("Hendrik", ["Top of the morning!"],"",this.hendrik);
+        this.hendrik.missionDialogue = new Dialogue("Hendrik", [" Heh morning.", "The Wanderson Melody is famous for unlocking doors.", "Try C for the second letter."],"",this.hendrik);
         this.add( this.hendrik);
 
 
-
+        this.hendrik.canUseMissionDialogue = GameStateController.instance.alreadyExploredInside;
+        this.cornelius.canUseMissionDialogue = GameStateController.instance.alreadyExploredInside;
+        this.sam.canUseMissionDialogue = GameStateController.instance.alreadyExploredInside;
+        if(!GameStateController.instance.alreadyShowedTutorialMessage)
         this.showTutorialMessage();
+
+        GameStateController.logAllActors(_context.engine);
     }
+
+    onDeactivate(_context) {
+        super.onDeactivate(_context);
+        GameStateController.killAllActors(_context.previousScene)
+
+    }
+
+
+
 
 }

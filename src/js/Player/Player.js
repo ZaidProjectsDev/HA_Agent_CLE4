@@ -1,5 +1,5 @@
 //The player character's main script.
-import {Actor, CollisionType, Color, Input, Vector} from "excalibur";
+import {Actor, CollisionType, Color, Input, RotationType, Vector} from "excalibur";
 import {GameStateController} from "../GameState/GameStateController.js";
 import {Weapon} from "../Weapon.js";
 import {Interactable} from "../Generics/Interactable.js";
@@ -38,8 +38,8 @@ export class Player extends Actor
             }
 
         })
-        this.graphics.use(Resources.sptHat.toSprite());
-        this.scale = new Vector(0.1,0.1);
+        this.graphics.use(Resources.npc_top_hat.toSprite());
+        this.scale = new Vector(0.3,0.3);
     }
     triggerInteraction()
     {
@@ -113,7 +113,7 @@ export class Player extends Actor
         if(this.engine.input.keyboard.isHeld(Input.Keys.ShiftLeft) || this.engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.Face2))
         {
 
-            this.moveMultiplier = 4;
+            this.moveMultiplier = 1.125;
         }
         else
         {
@@ -122,24 +122,31 @@ export class Player extends Actor
         }
         if (this.engine.input.keyboard.isHeld(Input.Keys.D) || this.engine.input.gamepads.at(0).getAxes(Input.Axes.LeftStickX) > 0.1)
         {
+            this.rotation =4.725;
+            console.log(this.rotation);
             this.moveVelocity = new Vector(1*this.moveSpeed*this.moveMultiplier,this.moveVelocity.y);
         }
         else
         {
             if (this.engine.input.keyboard.isHeld(Input.Keys.A) || this.engine.input.gamepads.at(0).getAxes(Input.Axes.LeftStickX) < -0.1)
             {
+                this.rotation =-4.725;
                 this.moveVelocity = new Vector(-1*this.moveSpeed*this.moveMultiplier,this.moveVelocity.y);
             }
         }
         if (this.engine.input.keyboard.isHeld(Input.Keys.W) || this.engine.input.gamepads.at(0).getAxes(Input.Axes.LeftStickY) < -0.1)
         {
             this.moveVelocity = new Vector(this.moveVelocity.x,-1*this.moveSpeed*this.moveMultiplier);
+            this.rotation=3.125555;
+
         }
         else
         {
             if (this.engine.input.keyboard.isHeld(Input.Keys.S) || this.engine.input.gamepads.at(0).getAxes(Input.Axes.LeftStickY) > 0.1)
             {
                 this.moveVelocity = new Vector(this.moveVelocity.x,1*this.moveSpeed*this.moveMultiplier);
+                this.rotation = 0;
+                console.log(this.rotation);
             }
         }
     }
@@ -151,7 +158,7 @@ export class Player extends Actor
         this.moveVelocity = new Vector(this.moveVelocity.x*0.9, this.moveVelocity.y*0.9)
      if(this.moveVelocity.x>0.8 ||this.moveVelocity.x<-0.8 ||
          this.moveVelocity.y>0.8 ||this.moveVelocity.y<-0.8 ) {
-            console.log(this.pos);
+            //console.log(this.pos);
         }
     }
 

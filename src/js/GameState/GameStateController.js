@@ -8,6 +8,7 @@ import {Actor, CollisionType, Color, Sound, Vector} from "excalibur";
 import {Resources} from "../resources.js";
 import {SoundProperty} from "./SoundProperty.js";
 import {Dialogue} from "./Dialogue.js";
+import {NPC} from "../Player/NPC.js";
 
 const GameState =
     {
@@ -46,6 +47,11 @@ const GameState =
         lastSpawnPosition
         lastUsedDialog
         wasShowingDialog
+        alreadyShowedTutorialMessage
+        cameFromInside
+        joannaMission
+        alettaMission
+        alreadyExploredInside
         constructor(engine) {
             if(GameStateController.instance == null)
             {
@@ -55,10 +61,14 @@ const GameState =
             GameStateController.instance.currentGameState = GameState.MainMenu
             GameStateController.setVolumeProperty(SoundProperty.gameVolume,0.5);
             GameStateController.setVolumeProperty(SoundProperty.soundVolume,0.7);
-            GameStateController.setVolumeProperty(SoundProperty.musicVolume,0.45);
+            GameStateController.setVolumeProperty(SoundProperty.musicVolume,0.15);
             GameStateController.instance.pianoWasIncorrect = false
             GameStateController.instance.pianoCompleted = false;
-
+            GameStateController.instance.cameFromInside = false;
+            GameStateController.instance.alreadyShowedTutorialMessage = false;
+            GameStateController.instance.joannaMission = false;
+            GameStateController.instance.alettaMission = false;
+            GameStateController.instance.alreadyExploredInside = false;
         }
 
         setGameState(newGameState)
@@ -75,6 +85,7 @@ const GameState =
             GameStateController.runFunctionOfDeceasedDialog();
           //  GameStateController.instance.lastUsedDialog = null;
         }
+
         ///ChagtGPT Experiment
         static wrapText(text, maxLength) {
             if (text.length > maxLength) {
@@ -99,8 +110,14 @@ const GameState =
                         remainingText = remainingText.substring(maxLength);
                     }
 
+                    // Remove spaces on new lines
+                    chunk = chunk.trim().replace(/\n\s*/g, '\n');
+
                     wrappedText += chunk + '\n';
                 }
+
+                // Remove spaces on new lines from the remaining text
+                remainingText = remainingText.trim().replace(/\n\s*/g, '\n');
 
                 wrappedText += remainingText;
                 return wrappedText;
@@ -108,18 +125,29 @@ const GameState =
 
             return text;
         }
+
         ///
         static checkForRequiredStuff()
         {
 
             if(GameStateController.instance.pianoCompleted)
             {
+                this.npcCheck = new NPC({width:32,height:32, pos: new Vector(9999,9999)});
+                this.getEngine().add(this.npcCheck)
+                this.npcCheck.setInteractionBox(1,1);
+                this.npcCheck.genericDialogue = new Dialogue("You", ["Hey...a key.", "Looks like I can open that door now."], "", this.npcCheck);
+                this.npcCheck.functionToExecute = `GameStateController.instance.engine.currentScene.getRidOfBlackBox()`;
+                this.npcCheck.interactionBox.interact();
               //  GameStateController.showTextBoxMessage("You", "Whoa! Something interesting happened.");
             }
             if(  GameStateController.instance.pianoWasIncorrect)
             {
              //   GameStateController.showTextBoxMessage("You", "Whoa! Something bad happened.");
-              GameStateController.showDialogueMessage(new Dialogue("You", ["Oh shit, I fucked up.", "I mean, I really really fucked this up good.", "I should be fired"], "GameStateController.instance.engine.currentScene.goToExterior"));
+                this.npcCheck = new NPC({width:32,height:32, pos: new Vector(9999,9999)});
+                this.getEngine().add(this.npcCheck)
+                this.npcCheck.setInteractionBox(1,1);
+                this.npcCheck.genericDialogue = new Dialogue("You", ["I don't think that was it.","Maybe I should go ask around."], "", this.npcCheck);
+                this.npcCheck.interactionBox.interact();
                 GameStateController.instance.pianoWasIncorrect = false;
             }
 
@@ -137,13 +165,31 @@ const GameState =
             {
                 GameStateController.instance.player.kill();
             }
-            GameStateController.instance.player = new Player(200);
+            GameStateController.instance.player = new Player(150);
             GameStateController.instance.player.pos = spawnLocation;
             GameStateController.instance.engine.currentScene.add(  GameStateController.instance.player);
         }
         /**
          *Checks if the player can move.
          */
+      static  logAllActors(engine) {
+            const actors = engine.currentScene.actors;
+
+            console.log("All Actors:");
+            console.log("COUNT : " + actors.length);
+            for (const actor of actors) {
+                console.log(actor);
+            }
+            console.log("COUNT : " + actors.length);
+        }
+       static killAllActors(scene) {
+            let actors = scene.actors;
+
+            for (let actor of actors) {
+                actor.kill();
+                actor = null;
+            }
+        }
       static  playerCanMove()
         {
             if(GameStateController.instance.showingMessage)

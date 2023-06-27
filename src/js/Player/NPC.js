@@ -12,6 +12,9 @@ export class NPC extends Actor
     interactionBox
     canUseMissionDialogue
     canShowDialogues
+    showingDialogue
+    dialogueDone
+    functionToExecute;
     constructor(options) {
         super(options);
     }
@@ -27,8 +30,23 @@ export class NPC extends Actor
     canShowDialogue()
     {
         GameStateController.instance.lastUsedDialog = this.genericDialogue;
+    }
+    executeFunction()
+    {
+        if(this.showingDialogue)
+        {
+            if(this.dialogueDone)
+            {
+                if(this.functionToExecute!= "");
+                {
+                    console.log("Fuck you");
+                    eval(this.functionToExecute);
+                    this.showingDialogue = false;
+                    this.dialogueDone = false;
 
-
+                }
+            }
+        }
     }
     runDialogue(dialogue)
     {
@@ -44,15 +62,22 @@ export class NPC extends Actor
         else {
             this.dialogue = this.genericDialogue;
         }
-        if(this.interactionBox.showing)
+        if(this.interactionBox!=null) {
+            if (this.interactionBox.showing) {
+                GameStateController.showDialogueMessage(this.dialogue);
+                this.interactionBox.showing = false;
+            }
+        }
+        else
         {
-            GameStateController.showDialogueMessage(this.genericDialogue);
-            this.interactionBox.showing = false;
+            GameStateController.showDialogueMessage(this.dialogue);
         }
        // console.log(this.genericDialogue)
     }
+
     onPreUpdate(_engine, _delta) {
         super.onPreUpdate(_engine, _delta);
         this.checkDialogueOptions();
+        this.executeFunction();
     }
 }

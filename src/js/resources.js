@@ -12,6 +12,7 @@ import asset_bgm_interior_a from '../sound/bgm/Interior_A.mp3';
 import asset_bgb_exterior from '../sound/bgm/Exterior.mp3';
 import asset_snd_wrong from '../sound/menu/Wrong.wav';
 import asset_snd_unlock from '../sound/menu/Door_open.mp3';
+import asset_snd_unlock_piano from '../sound/menu/Unlock.wav';
 import asset_spt_hat from '../images/sprites/DetectiveHat.png';
 import pianoA from '../sound/piano/A.wav';
 import pianoB from '../sound/piano/B.wav';
@@ -32,7 +33,14 @@ import soundButton from '../images/soundButton.png';
 import controlSummary from '../images/controlSummary.png';
 import arcadeStart from '../images/controlStart.png';
 import arcadeSound from '../images/controlSound.png';
-
+import asset_snd_voice1 from '../sound/voice/Voice1.wav';
+import asset_snd_voice2 from '../sound/voice/Voice2.wav';
+import asset_snd_voice3 from '../sound/voice/Voice3.wav';
+import asset_snd_voice4 from '../sound/voice/Voice4.wav';
+import asset_snd_voice5 from '../sound/voice/Voice5.wav';
+import asset_snd_voice6 from '../sound/voice/Voice6.wav';
+import asset_snd_voice7 from '../sound/voice/Voice7.wav';
+import asset_spt_pianohelp from '../images/interior/Puzzlescheme.png';
 const Resources = {
     Fish: new ImageSource(fishImage),
     GenericNoise: new ImageSource(genericNoise),
@@ -50,6 +58,7 @@ const Resources = {
     logo_image: new ImageSource(logo_image),
     sndUnlock: new Sound(asset_snd_unlock),
     sndWrong: new Sound(asset_snd_wrong),
+    sndUnlockPiano: new Sound(asset_snd_unlock_piano),
     pianoA: new Sound(pianoA),
     pianoB: new Sound(pianoB),
     pianoC: new Sound(pianoC),
@@ -67,7 +76,15 @@ const Resources = {
     SoundButton: new ImageSource(soundButton),
     ControlSummary: new ImageSource(controlSummary),
     ArcadeStart: new ImageSource(arcadeStart),
-    ArcadeSound: new ImageSource(arcadeSound)
+    ArcadeSound: new ImageSource(arcadeSound),
+    voice_1: new Sound(asset_snd_voice1),
+    voice_2: new Sound(asset_snd_voice2),
+    voice_3: new Sound(asset_snd_voice3),
+    voice_4: new Sound(asset_snd_voice4),
+    voice_5: new Sound(asset_snd_voice5),
+    voice_6: new Sound(asset_snd_voice6),
+    voice_7: new Sound(asset_snd_voice7),
+    pianoHelpImg: new ImageSource(asset_spt_pianohelp)
 }
 const resourceArray = []
 for (const key in Resources) {
