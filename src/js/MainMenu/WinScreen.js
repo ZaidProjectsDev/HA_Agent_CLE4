@@ -29,17 +29,12 @@ export class WinMenu extends ExtendedScene
 
         _context.engine.backgroundColor = Color.fromHex('#39545D');
 
-        const buttonStart = new ReturnButton();
-        this.add(buttonStart);
+        //const buttonStart = new ReturnButton();
+       // this.add(buttonStart);
 
-        const controlStart = new StartControl();
-        this.add(controlStart);
+      //  const controlStart = new StartControl();
+      //  this.add(controlStart);
 
     }
-    onPreUpdate(_engine, _delta) {
-        super.onPreUpdate(_engine, _delta);
-        if (this.engine.input.gamepads.at(0).isButtonPressed(Input.Buttons.Face1)) {
-            _engine.goToScene('MainMenu');
-        }
-    }
+
 }

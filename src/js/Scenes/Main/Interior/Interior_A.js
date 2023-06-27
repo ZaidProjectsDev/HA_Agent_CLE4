@@ -127,8 +127,13 @@ export class Interior_A extends ExtendedScene
         this.add(this.waluwigi);
         this.waluwigi.genericDialogue = new Dialogue("Wallace Anderson", ["WHAAAAAAAAAAA!", "YOU FOUND ME??!", "NOOOOOOOOO!!!!"],"", this.waluwigi);
         this.waluwigi.genericDialogue.playSound = Resources.voice_3;
+        this.waluwigi.functionToExecute = `GameStateController.getEngine().currentScene.diaEndGame()`;
         GameStateController.playSound(Resources.sndUnlockPiano,9);
 
+    }
+    diaEndGame()
+    {
+        this.engine.goToScene("WinScreen");
     }
     onInitialize(_engine) {
         super.onInitialize(_engine);

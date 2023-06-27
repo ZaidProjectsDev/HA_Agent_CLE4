@@ -64,6 +64,21 @@ const GameState =
             GameStateController.setVolumeProperty(SoundProperty.soundVolume,0.7);
             GameStateController.setVolumeProperty(SoundProperty.musicVolume,0.15);
             GameStateController.instance.pianoWasIncorrect = false
+            GameStateController.instance.pianoCompleted = true;
+            GameStateController.instance.cameFromInside = false;
+            GameStateController.instance.alreadyShowedTutorialMessage = false;
+            GameStateController.instance.joannaMission = false;
+            GameStateController.instance.alettaMission = false;
+            GameStateController.instance.alreadyExploredInside = false;
+            GameStateController.instance.soundToPlay = null;
+        }
+        static resetGame()
+        {
+            GameStateController.setVolumeProperty(SoundProperty.gameVolume,0.5);
+            GameStateController.setVolumeProperty(SoundProperty.soundVolume,0.7);
+            GameStateController.setVolumeProperty(SoundProperty.musicVolume,0.15);
+
+            GameStateController.instance.pianoWasIncorrect = false
             GameStateController.instance.pianoCompleted = false;
             GameStateController.instance.cameFromInside = false;
             GameStateController.instance.alreadyShowedTutorialMessage = false;
@@ -72,7 +87,6 @@ const GameState =
             GameStateController.instance.alreadyExploredInside = false;
             GameStateController.instance.soundToPlay = null;
         }
-
         setGameState(newGameState)
         {
             this.currentGameState = newGameState;

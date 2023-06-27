@@ -25,7 +25,7 @@ export class MainMenu extends ExtendedScene
 
     onActivate(_context) {
         super.onActivate(_context);
-
+        GameStateController.resetGame();
         const logo = new Logo();
         this.add(logo);
 
