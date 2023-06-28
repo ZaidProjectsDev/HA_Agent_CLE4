@@ -190,7 +190,7 @@ onPreUpdate(_engine, _delta) {
 
 
         this.sam = new NPC({width:32,height:32, pos: new Vector(1402,435)});
-        this.sam.graphics.use(Resources.npc_cop.toSprite());
+        this.sam.graphics.use(Resources.npc_cop_blue.toSprite());
         this.sam.setInteractionBox(640,640);
         this.sam.scale = new Vector(0.3,0.3);
         this.sam.genericDialogue = new Dialogue("Sam", ["Hello, thank you for investigating the case.", "Let me know if you need something."],"", this.sam);

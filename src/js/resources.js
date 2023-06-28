@@ -23,6 +23,7 @@ import asset_snd_popup from '../sound/menu/blipSelect.wav'
 import asset_spt_interact from '../images/sprites/Interact.png';
 import logo_image from '../images/Melodies_of_Enigma.png';
 import asset_spt_npc_cop from '../images/sprites/cop.png';
+import asset_spt_npc_cop_blue from '../images/sprites/cop_blue.png';
 import asset_spt_npc_cap_brown from '../images/sprites/cap_brown.png';
 import asset_spt_npc_top_hat_brown from '../images/sprites/top_hat_brown.png';
 import asset_spt_npc_white_hat from '../images/sprites/white_hat.png';
@@ -71,6 +72,7 @@ const Resources = {
     sptInteract: new ImageSource(asset_spt_interact),
     sptHat : new ImageSource(asset_spt_hat),
     npc_cop: new ImageSource(asset_spt_npc_cop),
+    npc_cop_blue: new ImageSource(asset_spt_npc_cop_blue),
     npc_cap_brown : new ImageSource(asset_spt_npc_cap_brown),
     npc_top_hat: new ImageSource(asset_spt_npc_top_hat_brown),
     npc_white_hat: new ImageSource(asset_spt_npc_white_hat),
